@@ -68,7 +68,7 @@
     img { max-width: 100%; height: auto; display: block; }
     .wrap { width: min(var(--max), calc(100% - 40px)); margin: auto; }
     
-    /* ====== شريط التنقل الزجاجي ====== */
+    /* ====== شريط التنقل الزجاجي (تابات) ====== */
     .nav {
       position: sticky; top: 16px; z-index: 1000;
       margin: 16px auto 0;
@@ -83,16 +83,16 @@
       box-shadow: var(--shadow), inset 0 1px 0 var(--glass-highlight);
       transition: var(--transition);
     }
-    .brand { font-weight: 800; letter-spacing: -0.02em; font-size: 1.3rem; }
+    .brand { font-weight: 800; letter-spacing: -0.02em; font-size: 1.3rem; cursor: pointer; }
     .brand span { color: var(--accent); }
     .links { display: flex; gap: 24px; color: var(--muted); font-size: 0.9rem; font-weight: 600; }
-    .links a { transition: color 0.3s; position: relative; padding: 4px 0; }
-    .links a:hover { color: var(--text); }
+    .links a { transition: color 0.3s; position: relative; padding: 4px 0; cursor: pointer; }
+    .links a:hover, .links a.active { color: var(--text); }
     .links a::after {
       content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
       background: var(--accent); transition: width 0.3s ease; border-radius: 2px;
     }
-    .links a:hover::after { width: 100%; }
+    .links a:hover::after, .links a.active::after { width: 100%; }
     
     .actions { display: flex; gap: 10px; }
     .pill-btn {
@@ -112,17 +112,7 @@
     .pill-btn:hover { background: var(--surface-hover); transform: scale(1.05); }
     .menu-btn { display: none; }
 
-    /* ====== نظام الصفحات ====== */
-    .page {
-      display: none;
-      animation: pageEnter 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-    .page.active { display: block; }
-    
-    @keyframes pageEnter {
-      from { opacity: 0; transform: translateY(20px) scale(0.98); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
+    /* ====== أنيميشن ====== */
     @keyframes float {
       0%, 100% { transform: rotate(-15deg) translateY(0) scale(1); }
       50% { transform: rotate(-15deg) translateY(-25px) scale(1.02); }
@@ -131,10 +121,12 @@
       0%, 100% { box-shadow: 0 0 20px var(--accent-glow); }
       50% { box-shadow: 0 0 40px var(--accent-glow); }
     }
-    @keyframes shimmer {
-      0% { background-position: -200% center; }
-      100% { background-position: 200% center; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
     }
+    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* ====== قسم Hero ====== */
     .hero {
@@ -352,24 +344,6 @@
     .contact-box h2 { font-size: clamp(2rem, 3.5vw, 3rem); letter-spacing: -0.04em; margin-top: 10px; font-weight: 800; }
     .contact-box p { color: var(--muted); margin-top: 12px; font-size: 1.1rem; max-width: 500px; }
     
-    .contact-form { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 500px; }
-    .form-group { display: flex; flex-direction: column; gap: 8px; }
-    .form-group label { font-size: 0.9rem; color: var(--muted); font-weight: 500; }
-    .form-group input, .form-group textarea {
-      padding: 16px;
-      border-radius: 12px;
-      border: 1px solid var(--glass-border);
-      background: var(--surface);
-      color: var(--text);
-      font-family: inherit;
-      font-size: 1rem;
-      transition: var(--transition);
-      outline: none;
-      backdrop-filter: blur(10px);
-    }
-    .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
-    .form-group textarea { resize: vertical; min-height: 120px; }
-
     /* ====== الفوتر ====== */
     .footer {
       padding: 50px 0;
@@ -382,10 +356,6 @@
     .social { display: flex; gap: 24px; }
     .social a { transition: color 0.3s, transform 0.3s; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
     .social a:hover { color: var(--accent); transform: translateY(-3px); }
-
-    /* ====== Scroll Reveal ====== */
-    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* ====== التجاوب ====== */
     @media(max-width: 1000px) {
@@ -421,13 +391,13 @@
 </head>
 <body>
   <header class="nav">
-    <a class="brand" href="#" onclick="showPage('home')">e7dx<span>.</span></a>
+    <a class="brand" onclick="scrollToSection('home')">e7dx<span>.</span></a>
     <nav class="links" id="navlinks">
-      <a href="#" onclick="showPage('home')" data-en="Home" data-ar="الرئيسية">الرئيسية</a>
-      <a href="#" onclick="showPage('work')" data-en="Work" data-ar="الأعمال">الأعمال</a>
-      <a href="#" onclick="showPage('about')" data-en="About" data-ar="عني">عني</a>
-      <a href="#" onclick="showPage('certs')" data-en="Certifications" data-ar="الشهادات">الشهادات</a>
-      <a href="#" onclick="showPage('contact')" data-en="Contact" data-ar="تواصل">تواصل</a>
+      <a onclick="scrollToSection('home')" class="active" data-en="Home" data-ar="الرئيسية">الرئيسية</a>
+      <a onclick="scrollToSection('work')" data-en="Work" data-ar="الأعمال">الأعمال</a>
+      <a onclick="scrollToSection('about')" data-en="About" data-ar="عني">عني</a>
+      <a onclick="scrollToSection('certs')" data-en="Certifications" data-ar="الشهادات">الشهادات</a>
+      <a onclick="scrollToSection('contact')" data-en="Contact" data-ar="تواصل">تواصل</a>
     </nav>
     <div class="actions">
       <button class="pill-btn" id="lang">EN</button>
@@ -438,203 +408,180 @@
 
   <main class="wrap">
     <!-- ================= الصفحة الرئيسية ================= -->
-    <div class="page active" id="page-home">
-      <section class="hero">
-        <div>
-          <span class="eyebrow">
-            <i class="dot"></i>
-            <span data-en="Software Engineering Graduate @ University of Babylon" data-ar="خريج هندسة البرمجيات @ جامعة بابل">خريج هندسة البرمجيات @ جامعة بابل</span>
-          </span>
-          <h1>
-            <span data-en="Building ideas" data-ar="أحوّل الأفكار">أحوّل الأفكار</span><br>
-            <span class="gradient" data-en="into digital things." data-ar="إلى حلول رقمية.">إلى حلول رقمية.</span>
-          </h1>
-          <p class="lead" data-en="I'm Jafar Ahmed, a recent Software Engineering graduate from the University of Babylon. I'm passionate about building practical digital experiences, databases, and reliable systems." data-ar="أنا جعفر أحمد، خريج هندسة برمجيات حديث من جامعة بابل. شغوف ببناء تجارب رقمية عملية وقواعد بيانات وأنظمة موثوقة.">أنا جعفر أحمد، خريج هندسة برمجيات حديث من جامعة بابل. شغوف ببناء تجارب رقمية عملية وقواعد بيانات وأنظمة موثوقة.</p>
-          <div class="cta">
-            <a class="btn primary" href="#" onclick="showPage('work')" data-en="Explore my work ↗" data-ar="استكشف أعمالي ↗">استكشف أعمالي ↗</a>
-            <a class="btn secondary" href="#" onclick="showPage('contact')" data-en="Get in touch" data-ar="تواصل وياي">تواصل وياي</a>
-          </div>
+    <section id="home" class="hero">
+      <div>
+        <span class="eyebrow">
+          <i class="dot"></i>
+          <span data-en="Software Engineering Graduate @ University of Babylon" data-ar="خريج هندسة البرمجيات @ جامعة بابل">خريج هندسة البرمجيات @ جامعة بابل</span>
+        </span>
+        <h1>
+          <span data-en="Building ideas" data-ar="أحوّل الأفكار">أحوّل الأفكار</span><br>
+          <span class="gradient" data-en="into digital things." data-ar="إلى حلول رقمية.">إلى حلول رقمية.</span>
+        </h1>
+        <p class="lead" data-en="I'm Jafar Ahmed, a recent Software Engineering graduate from the University of Babylon. I'm passionate about building practical digital experiences, databases, and reliable systems." data-ar="أنا جعفر أحمد، خريج هندسة برمجيات حديث من جامعة بابل. شغوف ببناء تجارب رقمية عملية وقواعد بيانات وأنظمة موثوقة.">أنا جعفر أحمد، خريج هندسة برمجيات حديث من جامعة بابل. شغوف ببناء تجارب رقمية عملية وقواعد بيانات وأنظمة موثوقة.</p>
+        <div class="cta">
+          <a class="btn primary" onclick="scrollToSection('work')" data-en="Explore my work ↗" data-ar="استكشف أعمالي ↗">استكشف أعمالي ↗</a>
+          <a class="btn secondary" href="https://wa.me/9647806667626" target="_blank" data-en="Contact Me" data-ar="راسلني">راسلني</a>
         </div>
-        <div class="orb-wrap">
-          <div class="orb-glow"></div>
-          <div class="orb"></div>
-        </div>
-      </section>
+      </div>
+      <div class="orb-wrap">
+        <div class="orb-glow"></div>
+        <div class="orb"></div>
+      </div>
+    </section>
       
-      <section class="reveal">
-        <div class="section-head">
-          <span class="kicker" data-en="Highlights" data-ar="أبرز الملامح">أبرز الملامح</span>
-          <h2 data-en="What I do best." data-ar="ما أُتقنه.">ما أُتقنه.</h2>
-        </div>
-        <div class="grid">
-          <article class="card">
-            <div class="project-top"><span class="project-icon">💻</span></div>
-            <h3 data-en="Web Development" data-ar="تطوير الويب">تطوير الويب</h3>
-            <p data-en="Building robust and scalable web applications using modern frameworks and databases." data-ar="بناء تطبيقات ويب قوية وقابلة للتوسع باستخدام أطر عمل حديثة وقواعد بيانات.">بناء تطبيقات ويب قوية وقابلة للتوسع باستخدام أطر عمل حديثة وقواعد بيانات.</p>
-          </article>
-          <article class="card">
-            <div class="project-top"><span class="project-icon">🗄️</span></div>
-            <h3 data-en="Database Design" data-ar="تصميم قواعد البيانات">تصميم قواعد البيانات</h3>
-            <p data-en="Designing efficient, reliable, and normalized relational databases for real-world applications." data-ar="تصميم قواعد بيانات علائقية فعالة وموثوقة ومنظمة لتطبيقات العالم الحقيقي.">تصميم قواعد بيانات علائقية فعالة وموثوقة ومنظمة لتطبيقات العالم الحقيقي.</p>
-          </article>
-          <article class="card">
-            <div class="project-top"><span class="project-icon">🤖</span></div>
-            <h3 data-en="Machine Learning" data-ar="تعلم الآلة">تعلم الآلة</h3>
-            <p data-en="Exploring data analysis and predictive modeling to extract insights and build intelligent systems." data-ar="استكشاف تحليل البيانات والنمذجة التنبؤية لاستخراج الرؤى وبناء أنظمة ذكية.">استكشاف تحليل البيانات والنمذجة التنبؤية لاستخراج الرؤى وبناء أنظمة ذكية.</p>
-          </article>
-        </div>
-      </section>
-    </div>
+    <section id="highlights">
+      <div class="section-head reveal">
+        <span class="kicker" data-en="Highlights" data-ar="أبرز الملامح">أبرز الملامح</span>
+        <h2 data-en="What I do best." data-ar="ما أُتقنه.">ما أُتقنه.</h2>
+      </div>
+      <div class="grid">
+        <article class="card reveal">
+          <div class="project-top"><span class="project-icon">💻</span></div>
+          <h3 data-en="Web Development" data-ar="تطوير الويب">تطوير الويب</h3>
+          <p data-en="Building robust and scalable web applications using modern frameworks and databases." data-ar="بناء تطبيقات ويب قوية وقابلة للتوسع باستخدام أطر عمل حديثة وقواعد بيانات.">بناء تطبيقات ويب قوية وقابلة للتوسع باستخدام أطر عمل حديثة وقواعد بيانات.</p>
+        </article>
+        <article class="card reveal">
+          <div class="project-top"><span class="project-icon">🗄️</span></div>
+          <h3 data-en="Database Design" data-ar="تصميم قواعد البيانات">تصميم قواعد البيانات</h3>
+          <p data-en="Designing efficient, reliable, and normalized relational databases for real-world applications." data-ar="تصميم قواعد بيانات علائقية فعالة وموثوقة ومنظمة لتطبيقات العالم الحقيقي.">تصميم قواعد بيانات علائقية فعالة وموثوقة ومنظمة لتطبيقات العالم الحقيقي.</p>
+        </article>
+        <article class="card reveal">
+          <div class="project-top"><span class="project-icon">🤖</span></div>
+          <h3 data-en="Machine Learning" data-ar="تعلم الآلة">تعلم الآلة</h3>
+          <p data-en="Exploring data analysis and predictive modeling to extract insights and build intelligent systems." data-ar="استكشاف تحليل البيانات والنمذجة التنبؤية لاستخراج الرؤى وبناء أنظمة ذكية.">استكشاف تحليل البيانات والنمذجة التنبؤية لاستخراج الرؤى وبناء أنظمة ذكية.</p>
+        </article>
+      </div>
+    </section>
 
-    <!-- ================= صفحة الأعمال ================= -->
-    <div class="page" id="page-work">
-      <section>
-        <div class="section-head reveal">
-          <span class="kicker" data-en="Portfolio" data-ar="معرض الأعمال">معرض الأعمال</span>
-          <h2 data-en="Projects I've built." data-ar="مشاريع قمت ببنائها.">مشاريع قمت ببنائها.</h2>
-          <p class="sub" data-en="A curated list of academic and personal projects." data-ar="قائمة مختارة من المشاريع الأكاديمية والشخصية.">قائمة مختارة من المشاريع الأكاديمية والشخصية.</p>
-        </div>
-        <div class="grid">
-          <article class="card reveal">
-            <div class="project-top"><span class="project-icon">🏫</span><span class="tag" data-en="Web App" data-ar="تطبيق ويب">تطبيق ويب</span></div>
-            <h3 data-en="Student Course Registration" data-ar="نظام تسجيل الطلبة">نظام تسجيل الطلبة</h3>
-            <p data-en="A web-based system for managing students, courses, and registrations with a structured database." data-ar="نظام ويب لإدارة الطلبة والمواد والتسجيلات باستخدام قاعدة بيانات منظمة.">نظام ويب لإدارة الطلبة والمواد والتسجيلات باستخدام قاعدة بيانات منظمة.</p>
-            <div class="stack">ASP.NET Core MVC · .NET 8 · SQL Server</div>
-          </article>
-          <article class="card reveal">
-            <div class="project-top"><span class="project-icon">💰</span><span class="tag" data-en="Database" data-ar="قاعدة بيانات">قاعدة بيانات</span></div>
-            <h3 data-en="Personal Expense Manager" data-ar="مدير المصروفات الشخصية">مدير المصروفات الشخصية</h3>
-            <p data-en="An expense-tracking project focused on recording, organizing, and reviewing personal spending." data-ar="مشروع لتسجيل المصروفات الشخصية وتنظيمها ومراجعة الإنفاق.">مشروع لتسجيل المصروفات الشخصية وتنظيمها ومراجعة الإنفاق.</p>
-            <div class="stack">MySQL · SQL · HCI</div>
-          </article>
-          <article class="card reveal">
-            <div class="project-top"><span class="project-icon">❤️</span><span class="tag" data-en="ML" data-ar="تعلم الآلة">تعلم الآلة</span></div>
-            <h3 data-en="Heart Disease Prediction" data-ar="توقع أمراض القلب">توقع أمراض القلب</h3>
-            <p data-en="An academic machine-learning project exploring data analysis and predictive modelling." data-ar="مشروع أكاديمي في تعلم الآلة لتحليل البيانات وبناء نموذج تنبؤي.">مشروع أكاديمي في تعلم الآلة لتحليل البيانات وبناء نموذج تنبؤي.</p>
-            <div class="stack">Python · Scikit-Learn · Pandas</div>
-          </article>
-          <article class="card reveal">
-            <div class="project-top"><span class="project-icon">🕌</span><span class="tag" data-en="Database" data-ar="قاعدة بيانات">قاعدة بيانات</span></div>
-            <h3 data-en="Sakeena App" data-ar="تطبيق سكينة">تطبيق سكينة</h3>
-            <p data-en="A database-design project covering data structure, relationships, and application requirements." data-ar="مشروع تصميم قاعدة بيانات يشمل هيكلة البيانات والعلاقات ومتطلبات التطبيق.">مشروع تصميم قاعدة بيانات يشمل هيكلة البيانات والعلاقات ومتطلبات التطبيق.</p>
-            <div class="stack">Database Design · SQL</div>
-          </article>
-          <article class="card reveal">
-            <div class="project-top"><span class="project-icon">🔍</span><span class="tag" data-en="AI" data-ar="ذكاء اصطناعي">ذكاء اصطناعي</span></div>
-            <h3 data-en="AI Search Project" data-ar="مشروع البحث بالذكاء الاصطناعي">مشروع البحث بالذكاء الاصطناعي</h3>
-            <p data-en="An exploration of artificial-intelligence search strategies and problem-solving approaches." data-ar="تطبيق يستكشف خوارزميات البحث في الذكاء الاصطناعي وطرق حل المشكلات.">تطبيق يستكشف خوارزميات البحث في الذكاء الاصطناعي وطرق حل المشكلات.</p>
-            <div class="stack">Python · AI · Search Algorithms</div>
-          </article>
-          <article class="card reveal">
-            <div class="project-top"><span class="project-icon">🎨</span><span class="tag" data-en="Desktop" data-ar="مكتبي">مكتبي</span></div>
-            <h3 data-en="Graphics Project" data-ar="مشروع الرسوميات">مشروع الرسوميات</h3>
-            <p data-en="A desktop graphics project experimenting with drawing, shapes, and visual programming concepts." data-ar="مشروع رسوميات مكتبي لتجربة الرسم والأشكال ومفاهيم البرمجة المرئية.">مشروع رسوميات مكتبي لتجربة الرسم والأشكال ومفاهيم البرمجة المرئية.</p>
-            <div class="stack">C# · Windows Forms · GDI+</div>
-          </article>
-        </div>
-      </section>
-    </div>
+    <!-- ================= قسم الأعمال ================= -->
+    <section id="work">
+      <div class="section-head reveal">
+        <span class="kicker" data-en="Portfolio" data-ar="معرض الأعمال">معرض الأعمال</span>
+        <h2 data-en="Projects I've built." data-ar="مشاريع قمت ببنائها.">مشاريع قمت ببنائها.</h2>
+        <p class="sub" data-en="A curated list of academic and personal projects." data-ar="قائمة مختارة من المشاريع الأكاديمية والشخصية.">قائمة مختارة من المشاريع الأكاديمية والشخصية.</p>
+      </div>
+      <div class="grid">
+        <article class="card reveal">
+          <div class="project-top"><span class="project-icon">🏫</span><span class="tag" data-en="Web App" data-ar="تطبيق ويب">تطبيق ويب</span></div>
+          <h3 data-en="Student Course Registration" data-ar="نظام تسجيل الطلبة">نظام تسجيل الطلبة</h3>
+          <p data-en="A web-based system for managing students, courses, and registrations with a structured database." data-ar="نظام ويب لإدارة الطلبة والمواد والتسجيلات باستخدام قاعدة بيانات منظمة.">نظام ويب لإدارة الطلبة والمواد والتسجيلات باستخدام قاعدة بيانات منظمة.</p>
+          <div class="stack">ASP.NET Core MVC · .NET 8 · SQL Server</div>
+        </article>
+        <article class="card reveal">
+          <div class="project-top"><span class="project-icon">💰</span><span class="tag" data-en="Database" data-ar="قاعدة بيانات">قاعدة بيانات</span></div>
+          <h3 data-en="Personal Expense Manager" data-ar="مدير المصروفات الشخصية">مدير المصروفات الشخصية</h3>
+          <p data-en="An expense-tracking project focused on recording, organizing, and reviewing personal spending." data-ar="مشروع لتسجيل المصروفات الشخصية وتنظيمها ومراجعة الإنفاق.">مشروع لتسجيل المصروفات الشخصية وتنظيمها ومراجعة الإنفاق.</p>
+          <div class="stack">MySQL · SQL · HCI</div>
+        </article>
+        <article class="card reveal">
+          <div class="project-top"><span class="project-icon">❤️</span><span class="tag" data-en="ML" data-ar="تعلم الآلة">تعلم الآلة</span></div>
+          <h3 data-en="Heart Disease Prediction" data-ar="توقع أمراض القلب">توقع أمراض القلب</h3>
+          <p data-en="An academic machine-learning project exploring data analysis and predictive modelling." data-ar="مشروع أكاديمي في تعلم الآلة لتحليل البيانات وبناء نموذج تنبؤي.">مشروع أكاديمي في تعلم الآلة لتحليل البيانات وبناء نموذج تنبؤي.</p>
+          <div class="stack">Python · Scikit-Learn · Pandas</div>
+        </article>
+        <article class="card reveal">
+          <div class="project-top"><span class="project-icon">🕌</span><span class="tag" data-en="Database" data-ar="قاعدة بيانات">قاعدة بيانات</span></div>
+          <h3 data-en="Sakeena App" data-ar="تطبيق سكينة">تطبيق سكينة</h3>
+          <p data-en="A database-design project covering data structure, relationships, and application requirements." data-ar="مشروع تصميم قاعدة بيانات يشمل هيكلة البيانات والعلاقات ومتطلبات التطبيق.">مشروع تصميم قاعدة بيانات يشمل هيكلة البيانات والعلاقات ومتطلبات التطبيق.</p>
+          <div class="stack">Database Design · SQL</div>
+        </article>
+        <article class="card reveal">
+          <div class="project-top"><span class="project-icon">🔍</span><span class="tag" data-en="AI" data-ar="ذكاء اصطناعي">ذكاء اصطناعي</span></div>
+          <h3 data-en="AI Search Project" data-ar="مشروع البحث بالذكاء الاصطناعي">مشروع البحث بالذكاء الاصطناعي</h3>
+          <p data-en="An exploration of artificial-intelligence search strategies and problem-solving approaches." data-ar="تطبيق يستكشف خوارزميات البحث في الذكاء الاصطناعي وطرق حل المشكلات.">تطبيق يستكشف خوارزميات البحث في الذكاء الاصطناعي وطرق حل المشكلات.</p>
+          <div class="stack">Python · AI · Search Algorithms</div>
+        </article>
+        <article class="card reveal">
+          <div class="project-top"><span class="project-icon">🎨</span><span class="tag" data-en="Desktop" data-ar="مكتبي">مكتبي</span></div>
+          <h3 data-en="Graphics Project" data-ar="مشروع الرسوميات">مشروع الرسوميات</h3>
+          <p data-en="A desktop graphics project experimenting with drawing, shapes, and visual programming concepts." data-ar="مشروع رسوميات مكتبي لتجربة الرسم والأشكال ومفاهيم البرمجة المرئية.">مشروع رسوميات مكتبي لتجربة الرسم والأشكال ومفاهيم البرمجة المرئية.</p>
+          <div class="stack">C# · Windows Forms · GDI+</div>
+        </article>
+      </div>
+    </section>
 
-    <!-- ================= صفحة عني ================= -->
-    <div class="page" id="page-about">
-      <section>
-        <div class="section-head reveal">
-          <span class="kicker" data-en="About Me" data-ar="نبذة عني">نبذة عني</span>
-          <h2 data-en="Curious by nature." data-ar="فضولي بطبيعتي.">فضولي بطبيعتي.</h2>
+    <!-- ================= قسم عني ================= -->
+    <section id="about">
+      <div class="section-head reveal">
+        <span class="kicker" data-en="About Me" data-ar="نبذة عني">نبذة عني</span>
+        <h2 data-en="Curious by nature." data-ar="فضولي بطبيعتي.">فضولي بطبيعتي.</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-panel reveal">
+          <h3 data-en="My approach" data-ar="أسلوبي">أسلوبي</h3>
+          <p data-en="I enjoy learning how systems work, designing reliable data structures, and developing applications that solve real problems. As a recent graduate from the University of Babylon, I'm ready to apply my academic knowledge to real-world challenges and continue growing as a developer." data-ar="أستمتع بفهم طريقة عمل الأنظمة وتصميم قواعد بيانات موثوقة وتطوير تطبيقات تحل مشاكل حقيقية. كخريج حديث من جامعة بابل، أنا جاهز لتطبيق معرفتي الأكاديمية على تحديات العالم الحقيقي ومواصلة النمو كمطور.">أستمتع بفهم طريقة عمل الأنظمة وتصميم قواعد بيانات موثوقة وتطوير تطبيقات تحل مشاكل حقيقية. كخريج حديث من جامعة بابل، أنا جاهز لتطبيق معرفتي الأكاديمية على تحديات العالم الحقيقي ومواصلة النمو كمطور.</p>
         </div>
-        <div class="about-grid">
-          <div class="about-panel reveal">
-            <h3 data-en="My approach" data-ar="أسلوبي">أسلوبي</h3>
-            <p data-en="I enjoy learning how systems work, designing reliable data structures, and developing applications that solve real problems. As a recent graduate from the University of Babylon, I'm ready to apply my academic knowledge to real-world challenges and continue growing as a developer." data-ar="أستمتع بفهم طريقة عمل الأنظمة وتصميم قواعد بيانات موثوقة وتطوير تطبيقات تحل مشاكل حقيقية. كخريج حديث من جامعة بابل، أنا جاهز لتطبيق معرفتي الأكاديمية على تحديات العالم الحقيقي ومواصلة النمو كمطور.">أستمتع بفهم طريقة عمل الأنظمة وتصميم قواعد بيانات موثوقة وتطوير تطبيقات تحل مشاكل حقيقية. كخريج حديث من جامعة بابل، أنا جاهز لتطبيق معرفتي الأكاديمية على تحديات العالم الحقيقي ومواصلة النمو كمطور.</p>
-          </div>
-          <div class="about-panel reveal">
-            <h3 data-en="Tools & Technologies" data-ar="الأدوات والتقنيات">الأدوات والتقنيات</h3>
-            <p data-en="Technologies I've studied or used in coursework and projects." data-ar="تقنيات درستها أو استخدمتها في المشاريع الدراسية والتطبيقية.">تقنيات درستها أو استخدمتها في المشاريع الدراسية والتطبيقية.</p>
-            <div class="skills">
-              <span class="skill">C#</span><span class="skill">Java</span><span class="skill">Python</span>
-              <span class="skill">SQL / MySQL</span><span class="skill">ASP.NET Core</span><span class="skill">HTML & CSS</span>
-              <span class="skill">JavaScript</span><span class="skill">Flutter / Dart</span><span class="skill">Git</span>
-              <span class="skill">Machine Learning</span><span class="skill">Database Design</span>
-            </div>
+        <div class="about-panel reveal">
+          <h3 data-en="Tools & Technologies" data-ar="الأدوات والتقنيات">الأدوات والتقنيات</h3>
+          <p data-en="Technologies I've studied or used in coursework and projects." data-ar="تقنيات درستها أو استخدمتها في المشاريع الدراسية والتطبيقية.">تقنيات درستها أو استخدمتها في المشاريع الدراسية والتطبيقية.</p>
+          <div class="skills">
+            <span class="skill">C#</span><span class="skill">Java</span><span class="skill">Python</span>
+            <span class="skill">SQL / MySQL</span><span class="skill">ASP.NET Core</span><span class="skill">HTML & CSS</span>
+            <span class="skill">JavaScript</span><span class="skill">Flutter / Dart</span><span class="skill">Git</span>
+            <span class="skill">Machine Learning</span><span class="skill">Database Design</span>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
 
-    <!-- ================= صفحة الشهادات ================= -->
-    <div class="page" id="page-certs">
-      <section>
-        <div class="section-head reveal">
-          <span class="kicker" data-en="Certifications" data-ar="الشهادات">الشهادات</span>
-          <h2 data-en="Courses & Certificates." data-ar="الدورات والشهادات.">الدورات والشهادات.</h2>
-          <p class="sub" data-en="Academic and professional certifications I've earned." data-ar="الشهادات الأكاديمية والمهنية التي حصلت عليها.">الشهادات الأكاديمية والمهنية التي حصلت عليها.</p>
+    <!-- ================= قسم الشهادات ================= -->
+    <section id="certs">
+      <div class="section-head reveal">
+        <span class="kicker" data-en="Certifications" data-ar="الشهادات">الشهادات</span>
+        <h2 data-en="Courses & Certificates." data-ar="الدورات والشهادات.">الدورات والشهادات.</h2>
+        <p class="sub" data-en="Academic and professional certifications I've earned." data-ar="الشهادات الأكاديمية والمهنية التي حصلت عليها.">الشهادات الأكاديمية والمهنية التي حصلت عليها.</p>
+      </div>
+      <div class="cert-list">
+        <div class="cert-item reveal">
+          <span class="cert-icon">🎓</span>
+          <div class="cert-info">
+            <h4 data-en="B.Sc. in Software Engineering" data-ar="بكالوريوس هندسة البرمجيات">بكالوريوس هندسة البرمجيات</h4>
+            <p data-en="University of Babylon" data-ar="جامعة بابل">جامعة بابل</p>
+          </div>
+          <span class="cert-year">2024</span>
         </div>
-        <div class="cert-list">
-          <div class="cert-item reveal">
-            <span class="cert-icon">🎓</span>
-            <div class="cert-info">
-              <h4 data-en="B.Sc. in Software Engineering" data-ar="بكالوريوس هندسة البرمجيات">بكالوريوس هندسة البرمجيات</h4>
-              <p data-en="University of Babylon" data-ar="جامعة بابل">جامعة بابل</p>
-            </div>
-            <span class="cert-year">2024</span>
+        <div class="cert-item reveal">
+          <span class="cert-icon">📜</span>
+          <div class="cert-info">
+            <h4 data-en="Database Design & SQL" data-ar="تصميم قواعد البيانات و SQL">تصميم قواعد البيانات و SQL</h4>
+            <p data-en="Academic Coursework" data-ar="مشروع دراسي">مشروع دراسي</p>
           </div>
-          <div class="cert-item reveal">
-            <span class="cert-icon">📜</span>
-            <div class="cert-info">
-              <h4 data-en="Database Design & SQL" data-ar="تصميم قواعد البيانات و SQL">تصميم قواعد البيانات و SQL</h4>
-              <p data-en="Academic Coursework" data-ar="مشروع دراسي">مشروع دراسي</p>
-            </div>
-            <span class="cert-year">2023</span>
-          </div>
-          <div class="cert-item reveal">
-            <span class="cert-icon">💡</span>
-            <div class="cert-info">
-              <h4 data-en="Machine Learning Fundamentals" data-ar="أساسيات تعلم الآلة">أساسيات تعلم الآلة</h4>
-              <p data-en="Academic Project" data-ar="مشروع أكاديمي">مشروع أكاديمي</p>
-            </div>
-            <span class="cert-year">2023</span>
-          </div>
+          <span class="cert-year">2023</span>
         </div>
-      </section>
-    </div>
+        <div class="cert-item reveal">
+          <span class="cert-icon">💡</span>
+          <div class="cert-info">
+            <h4 data-en="Machine Learning Fundamentals" data-ar="أساسيات تعلم الآلة">أساسيات تعلم الآلة</h4>
+            <p data-en="Academic Project" data-ar="مشروع أكاديمي">مشروع أكاديمي</p>
+          </div>
+          <span class="cert-year">2023</span>
+        </div>
+      </div>
+    </section>
 
-    <!-- ================= صفحة التواصل ================= -->
-    <div class="page" id="page-contact">
-      <section>
-        <div class="contact-box reveal">
-          <div>
-            <span class="kicker" data-en="Let's talk" data-ar="خلينا نتواصل">خلينا نتواصل</span>
-            <h2 data-en="Have a project in mind?" data-ar="عندك فرصة أو مشروع؟">عندك فرصة أو مشروع؟</h2>
-            <p data-en="I'm open to internships, junior opportunities, and collaboration. Feel free to reach out via email or connect with me on LinkedIn." data-ar="منفتح على فرص التدريب والعمل للمبتدئين والتعاون بالمشاريع. لا تتردد في التواصل معي عبر البريد الإلكتروني أو لينكد إن.">منفتح على فرص التدريب والعمل للمبتدئين والتعاون بالمشاريع. لا تتردد في التواصل معي عبر البريد الإلكتروني أو لينكد إن.</p>
-            <div style="margin-top: 24px; display: flex; gap: 16px; flex-wrap: wrap;">
-              <a class="btn primary" href="mailto:salib6660@gmail.com" data-en="Email me ↗" data-ar="راسلني ↗">راسلني ↗</a>
-              <a class="btn secondary" href="https://www.linkedin.com/in/e7dx" target="_blank" rel="noreferrer" data-en="LinkedIn ↗" data-ar="لينكد إن ↗">لينكد إن ↗</a>
-            </div>
+    <!-- ================= قسم التواصل ================= -->
+    <section id="contact">
+      <div class="contact-box reveal">
+        <div>
+          <span class="kicker" data-en="Let's talk" data-ar="خلينا نتواصل">خلينا نتواصل</span>
+          <h2 data-en="Have a project in mind?" data-ar="عندك فرصة أو مشروع؟">عندك فرصة أو مشروع؟</h2>
+          <p data-en="I'm open to internships, junior opportunities, and collaboration. Feel free to reach out via WhatsApp or connect with me on social media." data-ar="منفتح على فرص التدريب والعمل للمبتدئين والتعاون بالمشاريع. لا تتردد في التواصل معي عبر واتساب أو حساباتي على مواقع التواصل الاجتماعي.">منفتح على فرص التدريب والعمل للمبتدئين والتعاون بالمشاريع. لا تتردد في التواصل معي عبر واتساب أو حساباتي على مواقع التواصل الاجتماعي.</p>
+          <div style="margin-top: 24px; display: flex; gap: 16px; flex-wrap: wrap;">
+            <a class="btn primary" href="https://wa.me/9647806667626" target="_blank" data-en="WhatsApp ↗" data-ar="واتساب ↗">واتساب ↗</a>
+            <a class="btn secondary" href="mailto:salib6660@gmail.com" data-en="Email me ↗" data-ar="راسلني ↗">راسلني ↗</a>
           </div>
-          <form class="contact-form" onsubmit="event.preventDefault(); alert('شكراً لتواصلك! سأرد عليك قريباً.');">
-            <div class="form-group">
-              <label data-en="Your Name" data-ar="اسمك">اسمك</label>
-              <input type="text" required>
-            </div>
-            <div class="form-group">
-              <label data-en="Your Email" data-ar="بريدك الإلكتروني">بريدك الإلكتروني</label>
-              <input type="email" required>
-            </div>
-            <div class="form-group">
-              <label data-en="Your Message" data-ar="رسالتك">رسالتك</label>
-              <textarea required></textarea>
-            </div>
-            <button type="submit" class="btn primary" style="width: 100%; justify-content: center;" data-en="Send Message" data-ar="إرسال الرسالة">إرسال الرسالة</button>
-          </form>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
 
     <footer class="footer">
       <span>© <span id="year"></span> Jafar Ahmed. <span data-en="Designed with care." data-ar="صُمم بعناية.">صُمم بعناية.</span></span>
       <div class="social">
         <a href="https://github.com/e7dx" target="_blank" rel="noreferrer">GitHub ↗</a>
-        <a href="https://www.linkedin.com/in/e7dx" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+        <a href="https://www.linkedin.com/in/Jafar-Ahmed" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+        <a href="https://t.me/e7dx1" target="_blank" rel="noreferrer">Telegram ↗</a>
+        <a href="https://instagram.com/_e7dx" target="_blank" rel="noreferrer">Instagram ↗</a>
       </div>
     </footer>
   </main>
@@ -661,19 +608,41 @@
       });
     };
 
-    // ==== Page Navigation ====
-    function showPage(pageId) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById('page-' + pageId).classList.add('active');
+    // ==== Scroll Navigation ====
+    function scrollToSection(id) {
+      const element = document.getElementById(id);
+      if (element) {
+        const offset = 100; // مسافة للـ Navbar
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({
+          top: elementPosition - offset,
+          behavior: 'smooth'
+        });
+      }
       document.getElementById('navlinks').classList.remove('open');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      
-      // إعادة تفعيل الأنيميشن للصفحة الجديدة
-      setTimeout(() => {
-        document.querySelectorAll('.reveal').forEach(el => el.classList.remove('visible'));
-        checkReveal();
-      }, 100);
     }
+
+    // ==== Active Tab on Scroll ====
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.links a');
+    
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= sectionTop - 150) {
+          current = section.getAttribute('id');
+        }
+      });
+      
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('onclick').includes(current)) {
+          link.classList.add('active');
+        }
+      });
+      checkReveal();
+    });
 
     // ==== Mobile Menu ====
     document.getElementById('menu').onclick = () => document.getElementById('navlinks').classList.toggle('open');
@@ -690,7 +659,6 @@
         }
       });
     }
-    window.addEventListener('scroll', checkReveal);
     window.addEventListener('load', checkReveal);
 
     // ==== Year ====
