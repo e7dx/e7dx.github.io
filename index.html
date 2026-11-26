@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl" data-theme="dark">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <meta name="description" content="Jafar Ahmed — Software Engineering Graduate Portfolio">
   <meta name="theme-color" content="#0a0a0c">
   <title>جعفر أحمد — معرض أعمال</title>
@@ -12,68 +12,78 @@
   <style>
     :root {
       --bg: #0a0a0c;
-      --surface: rgba(255, 255, 255, 0.04);
-      --surface-hover: rgba(255, 255, 255, 0.08);
-      --glass: rgba(20, 20, 25, 0.6);
-      --line: rgba(255, 255, 255, 0.08);
+      --surface: rgba(255, 255, 255, 0.03);
+      --surface-hover: rgba(255, 255, 255, 0.07);
+      --glass: rgba(25, 25, 30, 0.45);
+      --glass-border: rgba(255, 255, 255, 0.12);
       --text: #f5f5f7;
-      --muted: #86868b;
+      --muted: #a1a1a6;
       --accent: #2997ff;
       --radius-pill: 50px;
-      --radius-card: 24px;
-      --blur: blur(20px);
-      --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      --radius-card: 28px;
+      --blur-amount: 24px;
+      --shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
       --max: 1100px;
+      --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     }
     [data-theme="light"] {
-      --bg: #fbfbfd;
-      --surface: rgba(0, 0, 0, 0.03);
-      --surface-hover: rgba(0, 0, 0, 0.06);
-      --glass: rgba(255, 255, 255, 0.7);
-      --line: rgba(0, 0, 0, 0.08);
+      --bg: #f5f5f7; /* Off-white مريح */
+      --surface: rgba(0, 0, 0, 0.02);
+      --surface-hover: rgba(0, 0, 0, 0.05);
+      --glass: rgba(255, 255, 255, 0.6);
+      --glass-border: rgba(0, 0, 0, 0.08);
       --text: #1d1d1f;
       --muted: #6e6e73;
       --accent: #0071e3;
-      --shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+      --shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
     }
+    
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
     body {
       background: var(--bg);
       color: var(--text);
       font-family: 'Inter', 'IBM Plex Sans Arabic', sans-serif;
       line-height: 1.6;
-      transition: background 0.4s ease, color 0.4s ease;
+      transition: background 0.5s ease, color 0.5s ease;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
     [dir="rtl"] body { font-family: 'IBM Plex Sans Arabic', 'Inter', sans-serif; }
     a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; height: auto; display: block; }
     
     .wrap { width: min(var(--max), calc(100% - 40px)); margin: auto; }
     
-    /* Navigation */
+    /* --- Liquid Glass Nav --- */
     .nav {
-      position: sticky; top: 12px; z-index: 100;
-      margin: 12px auto 0;
-      width: min(var(--max), calc(100% - 28px));
+      position: sticky; top: 16px; z-index: 100;
+      margin: 16px auto 0;
+      width: min(var(--max), calc(100% - 32px));
       display: flex; align-items: center; justify-content: space-between;
       padding: 12px 20px;
-      border: 1px solid var(--line);
+      border: 1px solid var(--glass-border);
       border-radius: var(--radius-pill);
       background: var(--glass);
-      backdrop-filter: var(--blur);
-      -webkit-backdrop-filter: var(--blur);
-      box-shadow: var(--shadow);
+      backdrop-filter: blur(var(--blur-amount)) saturate(180%);
+      -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(180%);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.1);
+      transition: var(--transition);
     }
-    .brand { font-weight: 600; letter-spacing: -0.02em; font-size: 1.1rem; }
+    .brand { font-weight: 700; letter-spacing: -0.02em; font-size: 1.2rem; }
     .brand span { color: var(--accent); }
-    .links { display: flex; gap: 28px; color: var(--muted); font-size: 0.9rem; font-weight: 500; }
-    .links a { transition: color 0.2s; }
+    .links { display: flex; gap: 28px; color: var(--muted); font-size: 0.95rem; font-weight: 500; }
+    .links a { transition: color 0.3s; position: relative; }
     .links a:hover { color: var(--text); }
-    .actions { display: flex; gap: 8px; }
+    .links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+      background: var(--accent); transition: width 0.3s ease;
+    }
+    .links a:hover::after { width: 100%; }
     
+    .actions { display: flex; gap: 8px; }
     .pill-btn {
-      border: 1px solid var(--line);
+      border: 1px solid var(--glass-border);
       background: var(--surface);
       color: var(--text);
       border-radius: var(--radius-pill);
@@ -81,16 +91,37 @@
       font-size: 0.85rem;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: var(--transition);
       font-family: inherit;
+      backdrop-filter: blur(10px);
     }
-    .pill-btn:hover { background: var(--surface-hover); transform: scale(1.02); }
-    
+    .pill-btn:hover { background: var(--surface-hover); transform: scale(1.05); }
     .menu-btn { display: none; }
 
-    /* Hero */
+    /* --- Pages & Animations --- */
+    .page {
+      display: none;
+      animation: fadeInUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      opacity: 0;
+    }
+    .page.active { display: block; }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes float {
+      0%, 100% { transform: rotate(-15deg) translateY(0); }
+      50% { transform: rotate(-15deg) translateY(-20px); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(41, 151, 255, 0.2); }
+      50% { box-shadow: 0 0 40px rgba(41, 151, 255, 0.5); }
+    }
+
+    /* --- Hero --- */
     .hero {
-      padding: 140px 0 100px;
+      padding: 120px 0 80px;
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
       gap: 60px;
@@ -98,17 +129,18 @@
     }
     .eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
-      border: 1px solid var(--line);
+      border: 1px solid var(--glass-border);
       border-radius: var(--radius-pill);
-      padding: 6px 14px;
+      padding: 6px 16px;
       color: var(--muted);
-      font-size: 0.8rem;
-      background: var(--surface);
-      backdrop-filter: var(--blur);
+      font-size: 0.85rem;
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      animation: pulse-glow 3s infinite;
     }
     .dot { width: 6px; height: 6px; border-radius: 50%; background: #30d158; box-shadow: 0 0 12px #30d158; }
     .hero h1 {
-      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
       letter-spacing: -0.04em;
       line-height: 1.05;
       margin: 24px 0 20px;
@@ -128,13 +160,18 @@
       font-size: 0.95rem;
       font-weight: 500;
       border: 1px solid transparent;
-      transition: all 0.25s ease;
+      transition: var(--transition);
       cursor: pointer;
     }
     .btn.primary { background: var(--text); color: var(--bg); }
-    .btn.primary:hover { opacity: 0.9; transform: translateY(-2px); }
-    .btn.secondary { background: var(--surface); border-color: var(--line); color: var(--text); }
-    .btn.secondary:hover { background: var(--surface-hover); transform: translateY(-2px); }
+    .btn.primary:hover { opacity: 0.9; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+    .btn.secondary { 
+      background: var(--glass); 
+      border-color: var(--glass-border); 
+      color: var(--text); 
+      backdrop-filter: blur(10px);
+    }
+    .btn.secondary:hover { background: var(--surface-hover); transform: translateY(-3px); }
     
     .orb-wrap { display: grid; place-items: center; min-height: 300px; }
     .orb {
@@ -142,7 +179,7 @@
       aspect-ratio: 1;
       border-radius: 40%;
       background: radial-gradient(circle at 30% 25%, #e0eaff 0, #7fa6d9 15%, #3a507a 40%, #151a2a 70%, #05060a 90%);
-      box-shadow: inset -20px -20px 40px rgba(0,0,0,0.6), 0 30px 80px rgba(41, 151, 255, 0.15);
+      box-shadow: inset -20px -20px 40px rgba(0,0,0,0.6), 0 30px 80px rgba(41, 151, 255, 0.2);
       position: relative;
       transform: rotate(-15deg);
       animation: float 6s ease-in-out infinite;
@@ -155,13 +192,9 @@
       text-shadow: 0 4px 20px rgba(0,0,0,0.5);
       transform: rotate(15deg);
     }
-    @keyframes float {
-      0%, 100% { transform: rotate(-15deg) translateY(0); }
-      50% { transform: rotate(-15deg) translateY(-15px); }
-    }
 
-    /* Sections */
-    section { padding: 80px 0; }
+    /* --- Sections --- */
+    section { padding: 60px 0; }
     .section-head { margin-bottom: 40px; }
     .kicker {
       font-size: 0.75rem;
@@ -179,97 +212,103 @@
     }
     .sub { color: var(--muted); font-size: 1rem; margin-top: 12px; max-width: 600px; }
 
-    /* Grid & Cards */
-    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    /* --- Liquid Glass Cards --- */
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
     .card {
-      border: 1px solid var(--line);
+      border: 1px solid var(--glass-border);
       border-radius: var(--radius-card);
       background: var(--glass);
-      backdrop-filter: var(--blur);
-      -webkit-backdrop-filter: var(--blur);
-      padding: 28px;
-      transition: all 0.3s ease;
+      backdrop-filter: blur(var(--blur-amount)) saturate(180%);
+      -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(180%);
+      padding: 32px;
+      transition: var(--transition);
       display: flex;
       flex-direction: column;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.05);
     }
     .card:hover {
-      transform: translateY(-6px);
+      transform: translateY(-8px);
       background: var(--surface-hover);
-      box-shadow: var(--shadow);
-      border-color: rgba(255,255,255,0.15);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.25);
     }
     .project-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
     .project-icon {
-      width: 44px; height: 44px;
-      border-radius: 14px;
+      width: 48px; height: 48px;
+      border-radius: 16px;
       display: grid; place-items: center;
       background: var(--surface);
-      font-size: 1.2rem;
+      font-size: 1.3rem;
+      border: 1px solid var(--glass-border);
     }
     .tag {
       font-size: 0.7rem;
       color: var(--muted);
-      border: 1px solid var(--line);
-      padding: 4px 10px;
+      border: 1px solid var(--glass-border);
+      padding: 4px 12px;
       border-radius: var(--radius-pill);
       background: var(--surface);
     }
-    .card h3 { font-size: 1.15rem; margin-bottom: 8px; letter-spacing: -0.01em; }
-    .card p { font-size: 0.9rem; color: var(--muted); margin-bottom: 20px; flex-grow: 1; }
-    .stack { font-size: 0.75rem; color: var(--accent); font-weight: 500; }
+    .card h3 { font-size: 1.2rem; margin-bottom: 10px; letter-spacing: -0.01em; }
+    .card p { font-size: 0.95rem; color: var(--muted); margin-bottom: 20px; flex-grow: 1; }
+    .stack { font-size: 0.8rem; color: var(--accent); font-weight: 500; }
 
-    /* About */
-    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    /* --- About --- */
+    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     .about-panel {
-      border: 1px solid var(--line);
+      border: 1px solid var(--glass-border);
       border-radius: var(--radius-card);
       background: var(--glass);
-      backdrop-filter: var(--blur);
-      -webkit-backdrop-filter: var(--blur);
-      padding: 32px;
+      backdrop-filter: blur(var(--blur-amount)) saturate(180%);
+      -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(180%);
+      padding: 36px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.05);
     }
-    .about-panel h3 { font-size: 1.3rem; margin-bottom: 12px; font-weight: 600; }
-    .about-panel p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
-    .skills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .about-panel h3 { font-size: 1.4rem; margin-bottom: 14px; font-weight: 600; }
+    .about-panel p { color: var(--muted); font-size: 1rem; line-height: 1.7; }
+    .skills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
     .skill {
-      border: 1px solid var(--line);
+      border: 1px solid var(--glass-border);
       background: var(--surface);
-      padding: 6px 14px;
+      padding: 8px 16px;
       border-radius: var(--radius-pill);
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       color: var(--muted);
       font-weight: 500;
+      transition: var(--transition);
     }
+    .skill:hover { background: var(--surface-hover); color: var(--text); transform: scale(1.05); }
 
-    /* Contact */
+    /* --- Contact --- */
     .contact {
-      border: 1px solid var(--line);
+      border: 1px solid var(--glass-border);
       border-radius: var(--radius-card);
-      padding: 48px;
+      padding: 56px;
       background: linear-gradient(135deg, var(--surface-hover), var(--glass));
-      backdrop-filter: var(--blur);
-      -webkit-backdrop-filter: var(--blur);
+      backdrop-filter: blur(var(--blur-amount)) saturate(180%);
+      -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(180%);
       display: flex; align-items: center; justify-content: space-between; gap: 30px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.1);
     }
-    .contact h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); letter-spacing: -0.03em; margin-top: 8px; }
-    .contact p { color: var(--muted); margin-top: 8px; font-size: 1rem; }
+    .contact h2 { font-size: clamp(1.8rem, 3vw, 2.8rem); letter-spacing: -0.03em; margin-top: 8px; }
+    .contact p { color: var(--muted); margin-top: 10px; font-size: 1.05rem; }
 
-    /* Footer */
+    /* --- Footer --- */
     .footer {
       padding: 40px 0;
       color: var(--muted);
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       display: flex; justify-content: space-between; gap: 20px;
-      border-top: 1px solid var(--line);
+      border-top: 1px solid var(--glass-border);
       margin-top: 40px;
     }
     .social { display: flex; gap: 20px; }
-    .social a { transition: color 0.2s; font-weight: 500; }
+    .social a { transition: color 0.3s; font-weight: 500; }
     .social a:hover { color: var(--accent); }
 
-    /* Responsive */
+    /* --- Responsive Mobile --- */
     @media(max-width: 900px) {
-      .hero { grid-template-columns: 1fr; padding: 100px 0 60px; gap: 40px; text-align: center; }
+      .hero { grid-template-columns: 1fr; padding: 80px 0 40px; gap: 40px; text-align: center; }
       .orb-wrap { min-height: 200px; grid-row: 1; }
       .orb { width: 180px; }
       .orb:after { font-size: 60px; }
@@ -279,30 +318,33 @@
       .links { display: none; }
       .menu-btn { display: block; }
       .links.open {
-        display: flex; position: absolute; top: 70px; left: 0; right: 0;
-        padding: 20px; background: var(--glass); border: 1px solid var(--line);
+        display: flex; position: absolute; top: 75px; left: 0; right: 0;
+        padding: 24px; background: var(--glass); border: 1px solid var(--glass-border);
         border-radius: var(--radius-card); flex-direction: column; gap: 16px;
-        backdrop-filter: var(--blur);
+        backdrop-filter: blur(var(--blur-amount));
+        box-shadow: var(--shadow);
       }
       .about { grid-template-columns: 1fr; }
-      .contact { flex-direction: column; align-items: flex-start; padding: 32px; }
+      .contact { flex-direction: column; align-items: flex-start; padding: 36px; }
+      .footer { flex-direction: column; text-align: center; }
+      .social { justify-content: center; }
     }
     @media(max-width: 600px) {
       .grid { grid-template-columns: 1fr; }
       .hero h1 { font-size: 2.8rem; }
-      .footer { flex-direction: column; text-align: center; }
-      .social { justify-content: center; }
+      .wrap { width: min(100% - 28px, var(--max)); }
+      .contact { padding: 28px; }
     }
   </style>
 </head>
 <body>
   <header class="nav">
-    <a class="brand" href="#home">e7dx<span>.</span></a>
+    <a class="brand" href="#" onclick="showPage('home')">e7dx<span>.</span></a>
     <nav class="links" id="navlinks">
-      <a href="#work" data-en="Work" data-ar="الأعمال">الأعمال</a>
-      <a href="#about" data-en="About" data-ar="عني">عني</a>
-      <a href="#skills" data-en="Skills" data-ar="المهارات">المهارات</a>
-      <a href="#contact" data-en="Contact" data-ar="تواصل">تواصل</a>
+      <a href="#" onclick="showPage('home')" data-en="Home" data-ar="الرئيسية">الرئيسية</a>
+      <a href="#" onclick="showPage('work')" data-en="Work" data-ar="الأعمال">الأعمال</a>
+      <a href="#" onclick="showPage('about')" data-en="About" data-ar="عني">عني</a>
+      <a href="#" onclick="showPage('contact')" data-en="Contact" data-ar="تواصل">تواصل</a>
     </nav>
     <div class="actions">
       <button class="pill-btn" id="lang">EN</button>
@@ -312,103 +354,115 @@
   </header>
 
   <main class="wrap">
-    <section class="hero" id="home">
-      <div>
-        <span class="eyebrow">
-          <i class="dot"></i>
-          <span data-en="Software Engineering Graduate @ University of Babylon" data-ar="خريج هندسة البرمجيات @ جامعة بابل">خريج هندسة البرمجيات @ جامعة بابل</span>
-        </span>
-        <h1>
-          <span data-en="Building ideas" data-ar="أحوّل الأفكار">أحوّل الأفكار</span><br>
-          <span class="gradient" data-en="into digital things." data-ar="إلى حلول رقمية.">إلى حلول رقمية.</span>
-        </h1>
-        <p class="lead" data-en="I'm Jafar Ahmed, a recent Software Engineering graduate from the University of Babylon. I'm passionate about building practical digital experiences, databases, and reliable systems." data-ar="أنا جعفر أحمد، خريج هندسة برمجيات حديث من جامعة بابل. شغوف ببناء تجارب رقمية عملية وقواعد بيانات وأنظمة موثوقة.">أنا جعفر أحمد، خريج هندسة برمجيات حديث من جامعة بابل. شغوف ببناء تجارب رقمية عملية وقواعد بيانات وأنظمة موثوقة.</p>
-        <div class="cta">
-          <a class="btn primary" href="#work" data-en="Explore my work ↗" data-ar="استكشف أعمالي ↗">استكشف أعمالي ↗</a>
-          <a class="btn secondary" href="#contact" data-en="Get in touch" data-ar="تواصل وياي">تواصل وياي</a>
-        </div>
-      </div>
-      <div class="orb-wrap"><div class="orb"></div></div>
-    </section>
-
-    <section id="work">
-      <div class="section-head">
-        <span class="kicker" data-en="Selected projects" data-ar="مشاريع مختارة">مشاريع مختارة</span>
-        <h2 data-en="Things I've worked on." data-ar="أعمال اشتغلت عليها.">أعمال اشتغلت عليها.</h2>
-        <p class="sub" data-en="A selection of academic and personal projects. Detailed case studies and source-code links can be added as each project is published." data-ar="مجموعة من المشاريع الدراسية والشخصية. نضيف تفاصيل كل مشروع وروابط الكود بعد تجهيزها.">مجموعة من المشاريع الدراسية والشخصية. نضيف تفاصيل كل مشروع وروابط الكود بعد تجهيزها.</p>
-      </div>
-      <div class="grid">
-        <article class="card">
-          <div class="project-top"><span class="project-icon">▦</span><span class="tag" data-en="Web application" data-ar="تطبيق ويب">تطبيق ويب</span></div>
-          <h3 data-en="Student Course Registration" data-ar="نظام تسجيل الطلبة">نظام تسجيل الطلبة</h3>
-          <p data-en="A web-based system for managing students, courses, and registrations with a structured database." data-ar="نظام ويب لإدارة الطلبة والمواد والتسجيلات باستخدام قاعدة بيانات منظمة.">نظام ويب لإدارة الطلبة والمواد والتسجيلات باستخدام قاعدة بيانات منظمة.</p>
-          <div class="stack">ASP.NET Core MVC · .NET 8 · SQL</div>
-        </article>
-        <article class="card">
-          <div class="project-top"><span class="project-icon">◫</span><span class="tag" data-en="Database" data-ar="قاعدة بيانات">قاعدة بيانات</span></div>
-          <h3 data-en="Personal Expense Manager" data-ar="مدير المصروفات الشخصية">مدير المصروفات الشخصية</h3>
-          <p data-en="An expense-tracking project focused on recording, organizing, and reviewing personal spending." data-ar="مشروع لتسجيل المصروفات الشخصية وتنظيمها ومراجعة الإنفاق.">مشروع لتسجيل المصروفات الشخصية وتنظيمها ومراجعة الإنفاق.</p>
-          <div class="stack">MySQL · SQL · HCI</div>
-        </article>
-        <article class="card">
-          <div class="project-top"><span class="project-icon">⌁</span><span class="tag" data-en="Machine learning" data-ar="تعلم الآلة">تعلم الآلة</span></div>
-          <h3 data-en="Heart Disease Prediction" data-ar="توقع أمراض القلب">توقع أمراض القلب</h3>
-          <p data-en="An academic machine-learning project exploring data analysis and predictive modelling." data-ar="مشروع أكاديمي في تعلم الآلة لتحليل البيانات وبناء نموذج تنبؤي.">مشروع أكاديمي في تعلم الآلة لتحليل البيانات وبناء نموذج تنبؤي.</p>
-          <div class="stack">Python · Machine Learning</div>
-        </article>
-        <article class="card">
-          <div class="project-top"><span class="project-icon">✳</span><span class="tag" data-en="Database design" data-ar="تصميم قاعدة بيانات">تصميم قاعدة بيانات</span></div>
-          <h3 data-en="Sakeena App" data-ar="تطبيق سكينة">تطبيق سكينة</h3>
-          <p data-en="A database-design project covering data structure, relationships, and application requirements." data-ar="مشروع تصميم قاعدة بيانات يشمل هيكلة البيانات والعلاقات ومتطلبات التطبيق.">مشروع تصميم قاعدة بيانات يشمل هيكلة البيانات والعلاقات ومتطلبات التطبيق.</p>
-          <div class="stack">Database Design · SQL</div>
-        </article>
-        <article class="card">
-          <div class="project-top"><span class="project-icon">⌘</span><span class="tag" data-en="Artificial intelligence" data-ar="ذكاء اصطناعي">ذكاء اصطناعي</span></div>
-          <h3 data-en="AI Search Project" data-ar="مشروع البحث بالذكاء الاصطناعي">مشروع البحث بالذكاء الاصطناعي</h3>
-          <p data-en="An exploration of artificial-intelligence search strategies and problem-solving approaches." data-ar="تطبيق يستكشف خوارزميات البحث في الذكاء الاصطناعي وطرق حل المشكلات.">تطبيق يستكشف خوارزميات البحث في الذكاء الاصطناعي وطرق حل المشكلات.</p>
-          <div class="stack">AI · Search Algorithms</div>
-        </article>
-        <article class="card">
-          <div class="project-top"><span class="project-icon">◈</span><span class="tag" data-en="Desktop application" data-ar="تطبيق مكتبي">تطبيق مكتبي</span></div>
-          <h3 data-en="Graphics Project" data-ar="مشروع الرسوميات">مشروع الرسوميات</h3>
-          <p data-en="A desktop graphics project experimenting with drawing, shapes, and visual programming concepts." data-ar="مشروع رسوميات مكتبي لتجربة الرسم والأشكال ومفاهيم البرمجة المرئية.">مشروع رسوميات مكتبي لتجربة الرسم والأشكال ومفاهيم البرمجة المرئية.</p>
-          <div class="stack">C# · Windows Forms</div>
-        </article>
-      </div>
-    </section>
-
-    <section id="about">
-      <div class="section-head">
-        <span class="kicker" data-en="A little about me" data-ar="نبذة عني">نبذة عني</span>
-        <h2 data-en="Curious by nature." data-ar="فضولي بطبيعتي.">فضولي بطبيعتي.</h2>
-      </div>
-      <div class="about">
-        <div class="about-panel">
-          <h3 data-en="My approach" data-ar="أسلوبي">أسلوبي</h3>
-          <p data-en="I enjoy learning how systems work, designing reliable data structures, and developing applications that solve real problems. As a recent graduate, I'm ready to apply my academic knowledge to real-world challenges." data-ar="أستمتع بفهم طريقة عمل الأنظمة وتصميم قواعد بيانات موثوقة وتطوير تطبيقات تحل مشاكل حقيقية. كخريج حديث، أنا جاهز لتطبيق معرفتي الأكاديمية على تحديات العالم الحقيقي.">أستمتع بفهم طريقة عمل الأنظمة وتصميم قواعد بيانات موثوقة وتطوير تطبيقات تحل مشاكل حقيقية. كخريج حديث، أنا جاهز لتطبيق معرفتي الأكاديمية على تحديات العالم الحقيقي.</p>
-        </div>
-        <div class="about-panel" id="skills">
-          <h3 data-en="Tools & technologies" data-ar="الأدوات والتقنيات">الأدوات والتقنيات</h3>
-          <p data-en="Technologies I've studied or used in coursework and projects." data-ar="تقنيات درستها أو استخدمتها في المشاريع الدراسية والتطبيقية.">تقنيات درستها أو استخدمتها في المشاريع الدراسية والتطبيقية.</p>
-          <div class="skills">
-            <span class="skill">C#</span><span class="skill">Java</span><span class="skill">Python</span>
-            <span class="skill">SQL / MySQL</span><span class="skill">ASP.NET Core</span><span class="skill">HTML & CSS</span>
-            <span class="skill">JavaScript</span><span class="skill">Flutter / Dart</span><span class="skill">Git</span>
+    <!-- HOME PAGE -->
+    <div class="page active" id="page-home">
+      <section class="hero">
+        <div>
+          <span class="eyebrow">
+            <i class="dot"></i>
+            <span data-en="Software Engineering Graduate @ University of Babylon" data-ar="خريج هندسة البرمجيات @ جامعة بابل">خريج هندسة البرمجيات @ جامعة بابل</span>
+          </span>
+          <h1>
+            <span data-en="Building ideas" data-ar="أحوّل الأفكار">أحوّل الأفكار</span><br>
+            <span class="gradient" data-en="into digital things." data-ar="إلى حلول رقمية.">إلى حلول رقمية.</span>
+          </h1>
+          <p class="lead" data-en="I'm Jafar Ahmed, a recent Software Engineering graduate from the University of Babylon. I'm passionate about building practical digital experiences." data-ar="أنا جعفر أحمد، خريج هندسة برمجيات حديث من جامعة بابل. شغوف ببناء تجارب رقمية عملية.">أنا جعفر أحمد، خريج هندسة برمجيات حديث من جامعة بابل. شغوف ببناء تجارب رقمية عملية.</p>
+          <div class="cta">
+            <a class="btn primary" href="#" onclick="showPage('work')" data-en="Explore my work ↗" data-ar="استكشف أعمالي ↗">استكشف أعمالي ↗</a>
+            <a class="btn secondary" href="#" onclick="showPage('contact')" data-en="Get in touch" data-ar="تواصل وياي">تواصل وياي</a>
           </div>
         </div>
-      </div>
-    </section>
+        <div class="orb-wrap"><div class="orb"></div></div>
+      </section>
+    </div>
 
-    <section id="contact">
-      <div class="contact">
-        <div>
-          <span class="kicker" data-en="Have a project in mind?" data-ar="عندك فرصة أو مشروع؟">عندك فرصة أو مشروع؟</span>
-          <h2 data-en="Let's build something useful." data-ar="خلّينا نبني شي مفيد.">خلّينا نبني شي مفيد.</h2>
-          <p data-en="I'm open to internships, junior opportunities, and collaboration." data-ar="منفتح على فرص التدريب والعمل للمبتدئين والتعاون بالمشاريع.">منفتح على فرص التدريب والعمل للمبتدئين والتعاون بالمشاريع.</p>
+    <!-- WORK PAGE -->
+    <div class="page" id="page-work">
+      <section>
+        <div class="section-head">
+          <span class="kicker" data-en="Selected projects" data-ar="مشاريع مختارة">مشاريع مختارة</span>
+          <h2 data-en="Things I've worked on." data-ar="أعمال اشتغلت عليها.">أعمال اشتغلت عليها.</h2>
+          <p class="sub" data-en="A selection of academic and personal projects." data-ar="مجموعة من المشاريع الدراسية والشخصية.">مجموعة من المشاريع الدراسية والشخصية.</p>
         </div>
-        <a class="btn primary" href="mailto:salib6660@gmail.com" data-en="Email me ↗" data-ar="راسلني ↗">راسلني ↗</a>
-      </div>
-    </section>
+        <div class="grid">
+          <article class="card">
+            <div class="project-top"><span class="project-icon">▦</span><span class="tag" data-en="Web application" data-ar="تطبيق ويب">تطبيق ويب</span></div>
+            <h3 data-en="Student Course Registration" data-ar="نظام تسجيل الطلبة">نظام تسجيل الطلبة</h3>
+            <p data-en="A web-based system for managing students, courses, and registrations." data-ar="نظام ويب لإدارة الطلبة والمواد والتسجيلات.">نظام ويب لإدارة الطلبة والمواد والتسجيلات.</p>
+            <div class="stack">ASP.NET Core MVC · .NET 8 · SQL</div>
+          </article>
+          <article class="card">
+            <div class="project-top"><span class="project-icon">◫</span><span class="tag" data-en="Database" data-ar="قاعدة بيانات">قاعدة بيانات</span></div>
+            <h3 data-en="Personal Expense Manager" data-ar="مدير المصروفات الشخصية">مدير المصروفات الشخصية</h3>
+            <p data-en="An expense-tracking project focused on recording and organizing spending." data-ar="مشروع لتسجيل المصروفات الشخصية وتنظيمها.">مشروع لتسجيل المصروفات الشخصية وتنظيمها.</p>
+            <div class="stack">MySQL · SQL · HCI</div>
+          </article>
+          <article class="card">
+            <div class="project-top"><span class="project-icon">⌁</span><span class="tag" data-en="Machine learning" data-ar="تعلم الآلة">تعلم الآلة</span></div>
+            <h3 data-en="Heart Disease Prediction" data-ar="توقع أمراض القلب">توقع أمراض القلب</h3>
+            <p data-en="An academic machine-learning project exploring predictive modelling." data-ar="مشروع أكاديمي في تعلم الآلة لبناء نموذج تنبؤي.">مشروع أكاديمي في تعلم الآلة لبناء نموذج تنبؤي.</p>
+            <div class="stack">Python · Machine Learning</div>
+          </article>
+          <article class="card">
+            <div class="project-top"><span class="project-icon">✳</span><span class="tag" data-en="Database design" data-ar="تصميم قاعدة بيانات">تصميم قاعدة بيانات</span></div>
+            <h3 data-en="Sakeena App" data-ar="تطبيق سكينة">تطبيق سكينة</h3>
+            <p data-en="A database-design project covering data structure and relationships." data-ar="مشروع تصميم قاعدة بيانات يشمل هيكلة البيانات والعلاقات.">مشروع تصميم قاعدة بيانات يشمل هيكلة البيانات والعلاقات.</p>
+            <div class="stack">Database Design · SQL</div>
+          </article>
+          <article class="card">
+            <div class="project-top"><span class="project-icon">⌘</span><span class="tag" data-en="Artificial intelligence" data-ar="ذكاء اصطناعي">ذكاء اصطناعي</span></div>
+            <h3 data-en="AI Search Project" data-ar="مشروع البحث بالذكاء الاصطناعي">مشروع البحث بالذكاء الاصطناعي</h3>
+            <p data-en="An exploration of artificial-intelligence search strategies." data-ar="تطبيق يستكشف خوارزميات البحث في الذكاء الاصطناعي.">تطبيق يستكشف خوارزميات البحث في الذكاء الاصطناعي.</p>
+            <div class="stack">AI · Search Algorithms</div>
+          </article>
+          <article class="card">
+            <div class="project-top"><span class="project-icon">◈</span><span class="tag" data-en="Desktop application" data-ar="تطبيق مكتبي">تطبيق مكتبي</span></div>
+            <h3 data-en="Graphics Project" data-ar="مشروع الرسوميات">مشروع الرسوميات</h3>
+            <p data-en="A desktop graphics project experimenting with drawing and shapes." data-ar="مشروع رسوميات مكتبي لتجربة الرسم والأشكال.">مشروع رسوميات مكتبي لتجربة الرسم والأشكال.</p>
+            <div class="stack">C# · Windows Forms</div>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div class="page" id="page-about">
+      <section>
+        <div class="section-head">
+          <span class="kicker" data-en="A little about me" data-ar="نبذة عني">نبذة عني</span>
+          <h2 data-en="Curious by nature." data-ar="فضولي بطبيعتي.">فضولي بطبيعتي.</h2>
+        </div>
+        <div class="about">
+          <div class="about-panel">
+            <h3 data-en="My approach" data-ar="أسلوبي">أسلوبي</h3>
+            <p data-en="I enjoy learning how systems work, designing reliable data structures, and developing applications that solve real problems. As a recent graduate, I'm ready to apply my academic knowledge to real-world challenges." data-ar="أستمتع بفهم طريقة عمل الأنظمة وتصميم قواعد بيانات موثوقة وتطوير تطبيقات تحل مشاكل حقيقية. كخريج حديث، أنا جاهز لتطبيق معرفتي الأكاديمية على تحديات العالم الحقيقي.">أستمتع بفهم طريقة عمل الأنظمة وتصميم قواعد بيانات موثوقة وتطوير تطبيقات تحل مشاكل حقيقية. كخريج حديث، أنا جاهز لتطبيق معرفتي الأكاديمية على تحديات العالم الحقيقي.</p>
+          </div>
+          <div class="about-panel">
+            <h3 data-en="Tools & technologies" data-ar="الأدوات والتقنيات">الأدوات والتقنيات</h3>
+            <p data-en="Technologies I've studied or used in coursework and projects." data-ar="تقنيات درستها أو استخدمتها في المشاريع الدراسية والتطبيقية.">تقنيات درستها أو استخدمتها في المشاريع الدراسية والتطبيقية.</p>
+            <div class="skills">
+              <span class="skill">C#</span><span class="skill">Java</span><span class="skill">Python</span>
+              <span class="skill">SQL / MySQL</span><span class="skill">ASP.NET Core</span><span class="skill">HTML & CSS</span>
+              <span class="skill">JavaScript</span><span class="skill">Flutter / Dart</span><span class="skill">Git</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div class="page" id="page-contact">
+      <section>
+        <div class="contact">
+          <div>
+            <span class="kicker" data-en="Have a project in mind?" data-ar="عندك فرصة أو مشروع؟">عندك فرصة أو مشروع؟</span>
+            <h2 data-en="Let's build something useful." data-ar="خلّينا نبني شي مفيد.">خلّينا نبني شي مفيد.</h2>
+            <p data-en="I'm open to internships, junior opportunities, and collaboration." data-ar="منفتح على فرص التدريب والعمل للمبتدئين والتعاون بالمشاريع.">منفتح على فرص التدريب والعمل للمبتدئين والتعاون بالمشاريع.</p>
+          </div>
+          <a class="btn primary" href="mailto:salib6660@gmail.com" data-en="Email me ↗" data-ar="راسلني ↗">راسلني ↗</a>
+        </div>
+      </section>
+    </div>
 
     <footer class="footer">
       <span>© <span id="year"></span> Jafar Ahmed. <span data-en="Designed with care." data-ar="صُمم بعناية.">صُمم بعناية.</span></span>
@@ -425,11 +479,13 @@
     const langBtn = document.getElementById('lang');
     const menuBtn = document.getElementById('menu');
     
+    // Theme Toggle
     themeBtn.onclick = () => {
       root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
       themeBtn.textContent = root.dataset.theme === 'dark' ? '☼' : '☾';
     };
 
+    // Language Toggle
     let isAr = true;
     langBtn.onclick = () => {
       isAr = !isAr;
@@ -441,11 +497,18 @@
       });
     };
 
-    menuBtn.onclick = () => document.getElementById('navlinks').classList.toggle('open');
-    document.querySelectorAll('#navlinks a').forEach(a => 
-      a.onclick = () => document.getElementById('navlinks').classList.remove('open')
-    );
+    // Page Navigation Logic
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + pageId).classList.add('active');
+      document.getElementById('navlinks').classList.remove('open');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
+    // Mobile Menu
+    menuBtn.onclick = () => document.getElementById('navlinks').classList.toggle('open');
+    
+    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
