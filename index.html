@@ -4,40 +4,54 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <meta name="description" content="Jafar Ahmed — Software Engineering Graduate Portfolio">
-  <meta name="theme-color" content="#0a0a0c">
+  <meta name="theme-color" content="#08080a">
   <title>جعفر أحمد — معرض أعمال</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* ====== المتغيرات والألوان ====== */
     :root {
-      --bg: #0a0a0c;
+      --bg: #08080a;
+      --bg-alt: #0f0f12;
       --surface: rgba(255, 255, 255, 0.03);
-      --surface-hover: rgba(255, 255, 255, 0.07);
-      --glass: rgba(25, 25, 30, 0.45);
-      --glass-border: rgba(255, 255, 255, 0.12);
+      --surface-hover: rgba(255, 255, 255, 0.08);
+      --glass: rgba(20, 20, 25, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-highlight: rgba(255, 255, 255, 0.15);
       --text: #f5f5f7;
-      --muted: #a1a1a6;
+      --muted: #86868b;
       --accent: #2997ff;
+      --accent-glow: rgba(41, 151, 255, 0.3);
+      --accent-secondary: #ff375f;
+      --accent-tertiary: #30d158;
       --radius-pill: 50px;
-      --radius-card: 28px;
-      --blur-amount: 24px;
-      --shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-      --max: 1100px;
+      --radius-card: 24px;
+      --blur-amount: 20px;
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
       --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      --max: 1200px;
     }
     [data-theme="light"] {
-      --bg: #f5f5f7; /* Off-white مريح */
+      --bg: #f5f5f7;
+      --bg-alt: #eaeaec;
       --surface: rgba(0, 0, 0, 0.02);
       --surface-hover: rgba(0, 0, 0, 0.05);
-      --glass: rgba(255, 255, 255, 0.6);
+      --glass: rgba(255, 255, 255, 0.65);
       --glass-border: rgba(0, 0, 0, 0.08);
+      --glass-highlight: rgba(255, 255, 255, 0.8);
       --text: #1d1d1f;
       --muted: #6e6e73;
       --accent: #0071e3;
-      --shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+      --accent-glow: rgba(0, 113, 227, 0.2);
+      --accent-secondary: #ff2d55;
+      --accent-tertiary: #34c759;
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.1);
     }
     
+    /* ====== أساسيات ====== */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
     body {
@@ -52,288 +66,356 @@
     [dir="rtl"] body { font-family: 'IBM Plex Sans Arabic', 'Inter', sans-serif; }
     a { color: inherit; text-decoration: none; }
     img { max-width: 100%; height: auto; display: block; }
-    
     .wrap { width: min(var(--max), calc(100% - 40px)); margin: auto; }
     
-    /* --- Liquid Glass Nav --- */
+    /* ====== شريط التنقل الزجاجي ====== */
     .nav {
-      position: sticky; top: 16px; z-index: 100;
+      position: sticky; top: 16px; z-index: 1000;
       margin: 16px auto 0;
       width: min(var(--max), calc(100% - 32px));
       display: flex; align-items: center; justify-content: space-between;
-      padding: 12px 20px;
+      padding: 12px 24px;
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-pill);
       background: var(--glass);
-      backdrop-filter: blur(var(--blur-amount)) saturate(180%);
-      -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(180%);
-      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.1);
+      backdrop-filter: blur(var(--blur-amount)) saturate(200%);
+      -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(200%);
+      box-shadow: var(--shadow), inset 0 1px 0 var(--glass-highlight);
       transition: var(--transition);
     }
-    .brand { font-weight: 700; letter-spacing: -0.02em; font-size: 1.2rem; }
+    .brand { font-weight: 800; letter-spacing: -0.02em; font-size: 1.3rem; }
     .brand span { color: var(--accent); }
-    .links { display: flex; gap: 28px; color: var(--muted); font-size: 0.95rem; font-weight: 500; }
-    .links a { transition: color 0.3s; position: relative; }
+    .links { display: flex; gap: 24px; color: var(--muted); font-size: 0.9rem; font-weight: 600; }
+    .links a { transition: color 0.3s; position: relative; padding: 4px 0; }
     .links a:hover { color: var(--text); }
     .links a::after {
-      content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
-      background: var(--accent); transition: width 0.3s ease;
+      content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+      background: var(--accent); transition: width 0.3s ease; border-radius: 2px;
     }
     .links a:hover::after { width: 100%; }
     
-    .actions { display: flex; gap: 8px; }
+    .actions { display: flex; gap: 10px; }
     .pill-btn {
       border: 1px solid var(--glass-border);
       background: var(--surface);
       color: var(--text);
       border-radius: var(--radius-pill);
-      padding: 8px 16px;
+      padding: 8px 18px;
       font-size: 0.85rem;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       transition: var(--transition);
       font-family: inherit;
       backdrop-filter: blur(10px);
+      display: flex; align-items: center; justify-content: center;
     }
     .pill-btn:hover { background: var(--surface-hover); transform: scale(1.05); }
     .menu-btn { display: none; }
 
-    /* --- Pages & Animations --- */
+    /* ====== نظام الصفحات ====== */
     .page {
       display: none;
-      animation: fadeInUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-      opacity: 0;
+      animation: pageEnter 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     }
     .page.active { display: block; }
     
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes pageEnter {
+      from { opacity: 0; transform: translateY(20px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
     @keyframes float {
-      0%, 100% { transform: rotate(-15deg) translateY(0); }
-      50% { transform: rotate(-15deg) translateY(-20px); }
+      0%, 100% { transform: rotate(-15deg) translateY(0) scale(1); }
+      50% { transform: rotate(-15deg) translateY(-25px) scale(1.02); }
     }
     @keyframes pulse-glow {
-      0%, 100% { box-shadow: 0 0 20px rgba(41, 151, 255, 0.2); }
-      50% { box-shadow: 0 0 40px rgba(41, 151, 255, 0.5); }
+      0%, 100% { box-shadow: 0 0 20px var(--accent-glow); }
+      50% { box-shadow: 0 0 40px var(--accent-glow); }
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
     }
 
-    /* --- Hero --- */
+    /* ====== قسم Hero ====== */
     .hero {
       padding: 120px 0 80px;
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
       gap: 60px;
       align-items: center;
+      min-height: 80vh;
     }
     .eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
+      display: inline-flex; align-items: center; gap: 10px;
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-pill);
-      padding: 6px 16px;
+      padding: 8px 20px;
       color: var(--muted);
       font-size: 0.85rem;
+      font-weight: 500;
       background: var(--glass);
       backdrop-filter: blur(10px);
       animation: pulse-glow 3s infinite;
     }
-    .dot { width: 6px; height: 6px; border-radius: 50%; background: #30d158; box-shadow: 0 0 12px #30d158; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-tertiary); box-shadow: 0 0 12px var(--accent-tertiary); }
     .hero h1 {
-      font-size: clamp(2.8rem, 6vw, 5.5rem);
-      letter-spacing: -0.04em;
+      font-size: clamp(3rem, 6.5vw, 6rem);
+      letter-spacing: -0.05em;
       line-height: 1.05;
-      margin: 24px 0 20px;
-      font-weight: 700;
+      margin: 28px 0 24px;
+      font-weight: 800;
     }
     .gradient {
-      background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+      background: linear-gradient(135deg, var(--text) 0%, var(--accent) 50%, var(--accent-secondary) 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
-    .lead { color: var(--muted); font-size: 1.15rem; max-width: 540px; font-weight: 400; }
-    .cta { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
+    .lead { color: var(--muted); font-size: 1.2rem; max-width: 560px; font-weight: 400; line-height: 1.7; }
+    .cta { display: flex; gap: 16px; margin-top: 40px; flex-wrap: wrap; }
     .btn {
-      padding: 14px 28px;
+      padding: 16px 32px;
       border-radius: var(--radius-pill);
-      font-size: 0.95rem;
-      font-weight: 500;
+      font-size: 1rem;
+      font-weight: 600;
       border: 1px solid transparent;
       transition: var(--transition);
       cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px;
     }
     .btn.primary { background: var(--text); color: var(--bg); }
-    .btn.primary:hover { opacity: 0.9; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+    .btn.primary:hover { opacity: 0.9; transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.2); }
     .btn.secondary { 
       background: var(--glass); 
       border-color: var(--glass-border); 
       color: var(--text); 
       backdrop-filter: blur(10px);
+      box-shadow: inset 0 1px 0 var(--glass-highlight);
     }
-    .btn.secondary:hover { background: var(--surface-hover); transform: translateY(-3px); }
+    .btn.secondary:hover { background: var(--surface-hover); transform: translateY(-4px); }
     
-    .orb-wrap { display: grid; place-items: center; min-height: 300px; }
+    .orb-wrap { display: grid; place-items: center; min-height: 350px; position: relative; }
     .orb {
-      width: min(280px, 70vw);
+      width: min(320px, 75vw);
       aspect-ratio: 1;
-      border-radius: 40%;
+      border-radius: 45%;
       background: radial-gradient(circle at 30% 25%, #e0eaff 0, #7fa6d9 15%, #3a507a 40%, #151a2a 70%, #05060a 90%);
-      box-shadow: inset -20px -20px 40px rgba(0,0,0,0.6), 0 30px 80px rgba(41, 151, 255, 0.2);
+      box-shadow: inset -25px -25px 50px rgba(0,0,0,0.7), 0 40px 100px var(--accent-glow);
       position: relative;
       transform: rotate(-15deg);
-      animation: float 6s ease-in-out infinite;
+      animation: float 8s ease-in-out infinite;
     }
     .orb:after {
       content: 'J.';
       position: absolute; inset: 0;
       display: grid; place-items: center;
-      color: #fff; font-size: 90px; font-weight: 600; letter-spacing: -0.05em;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      color: #fff; font-size: 110px; font-weight: 800; letter-spacing: -0.08em;
+      text-shadow: 0 8px 30px rgba(0,0,0,0.6);
       transform: rotate(15deg);
     }
+    .orb-glow {
+      position: absolute; inset: -20%; border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      filter: blur(60px); z-index: -1; animation: pulse-glow 4s infinite;
+    }
 
-    /* --- Sections --- */
-    section { padding: 60px 0; }
-    .section-head { margin-bottom: 40px; }
+    /* ====== عناوين الأقسام ====== */
+    section { padding: 80px 0; }
+    .section-head { margin-bottom: 50px; text-align: center; }
     .kicker {
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       text-transform: uppercase;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.2em;
       color: var(--accent);
-      font-weight: 600;
-      margin-bottom: 8px;
+      font-weight: 700;
+      margin-bottom: 12px;
       display: block;
     }
     .section-head h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
-      letter-spacing: -0.03em;
-      font-weight: 700;
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      letter-spacing: -0.04em;
+      font-weight: 800;
     }
-    .sub { color: var(--muted); font-size: 1rem; margin-top: 12px; max-width: 600px; }
+    .sub { color: var(--muted); font-size: 1.1rem; margin-top: 16px; max-width: 600px; margin-inline: auto; }
 
-    /* --- Liquid Glass Cards --- */
-    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    /* ====== شبكة المشاريع والكروت الزجاجية ====== */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
     .card {
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-card);
       background: var(--glass);
-      backdrop-filter: blur(var(--blur-amount)) saturate(180%);
-      -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(180%);
+      backdrop-filter: blur(var(--blur-amount)) saturate(200%);
+      -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(200%);
       padding: 32px;
       transition: var(--transition);
       display: flex;
       flex-direction: column;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.05);
+      box-shadow: var(--shadow), inset 0 1px 0 var(--glass-highlight);
+      position: relative;
+      overflow: hidden;
     }
+    .card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--glass-highlight), transparent);
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .card:hover::before { opacity: 1; }
     .card:hover {
-      transform: translateY(-8px);
+      transform: translateY(-8px) scale(1.01);
       background: var(--surface-hover);
-      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.1);
-      border-color: rgba(255,255,255,0.25);
+      box-shadow: var(--shadow-lg), inset 0 1px 0 var(--glass-highlight);
+      border-color: rgba(255,255,255,0.2);
     }
-    .project-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .project-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
     .project-icon {
-      width: 48px; height: 48px;
+      width: 52px; height: 52px;
       border-radius: 16px;
       display: grid; place-items: center;
       background: var(--surface);
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       border: 1px solid var(--glass-border);
+      box-shadow: inset 0 1px 0 var(--glass-highlight);
     }
     .tag {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       color: var(--muted);
       border: 1px solid var(--glass-border);
-      padding: 4px 12px;
+      padding: 6px 14px;
       border-radius: var(--radius-pill);
       background: var(--surface);
+      font-weight: 500;
     }
-    .card h3 { font-size: 1.2rem; margin-bottom: 10px; letter-spacing: -0.01em; }
-    .card p { font-size: 0.95rem; color: var(--muted); margin-bottom: 20px; flex-grow: 1; }
-    .stack { font-size: 0.8rem; color: var(--accent); font-weight: 500; }
+    .card h3 { font-size: 1.3rem; margin-bottom: 12px; letter-spacing: -0.02em; font-weight: 700; }
+    .card p { font-size: 0.95rem; color: var(--muted); margin-bottom: 24px; flex-grow: 1; line-height: 1.7; }
+    .stack { font-size: 0.8rem; color: var(--accent); font-weight: 600; letter-spacing: 0.02em; }
 
-    /* --- About --- */
-    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    /* ====== قسم نبذة عني ====== */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
     .about-panel {
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-card);
       background: var(--glass);
-      backdrop-filter: blur(var(--blur-amount)) saturate(180%);
-      -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(180%);
-      padding: 36px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.05);
+      backdrop-filter: blur(var(--blur-amount)) saturate(200%);
+      -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(200%);
+      padding: 40px;
+      box-shadow: var(--shadow), inset 0 1px 0 var(--glass-highlight);
+      transition: var(--transition);
     }
-    .about-panel h3 { font-size: 1.4rem; margin-bottom: 14px; font-weight: 600; }
-    .about-panel p { color: var(--muted); font-size: 1rem; line-height: 1.7; }
-    .skills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+    .about-panel:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .about-panel h3 { font-size: 1.5rem; margin-bottom: 16px; font-weight: 700; }
+    .about-panel p { color: var(--muted); font-size: 1rem; line-height: 1.8; }
+    
+    .skills { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
     .skill {
       border: 1px solid var(--glass-border);
       background: var(--surface);
-      padding: 8px 16px;
+      padding: 10px 20px;
       border-radius: var(--radius-pill);
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: var(--muted);
-      font-weight: 500;
+      font-weight: 600;
       transition: var(--transition);
+      backdrop-filter: blur(10px);
     }
-    .skill:hover { background: var(--surface-hover); color: var(--text); transform: scale(1.05); }
+    .skill:hover { background: var(--surface-hover); color: var(--text); transform: scale(1.08) translateY(-2px); border-color: var(--accent); }
 
-    /* --- Contact --- */
-    .contact {
+    /* ====== قسم الشهادات ====== */
+    .cert-list { display: flex; flex-direction: column; gap: 16px; }
+    .cert-item {
+      display: flex; align-items: center; gap: 20px;
+      padding: 24px;
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-card);
-      padding: 56px;
-      background: linear-gradient(135deg, var(--surface-hover), var(--glass));
-      backdrop-filter: blur(var(--blur-amount)) saturate(180%);
-      -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(180%);
-      display: flex; align-items: center; justify-content: space-between; gap: 30px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.1);
+      background: var(--glass);
+      backdrop-filter: blur(var(--blur-amount));
+      -webkit-backdrop-filter: blur(var(--blur-amount));
+      transition: var(--transition);
+      box-shadow: var(--shadow), inset 0 1px 0 var(--glass-highlight);
     }
-    .contact h2 { font-size: clamp(1.8rem, 3vw, 2.8rem); letter-spacing: -0.03em; margin-top: 8px; }
-    .contact p { color: var(--muted); margin-top: 10px; font-size: 1.05rem; }
+    .cert-item:hover { transform: translateX(8px); background: var(--surface-hover); border-color: var(--accent); }
+    .cert-icon { font-size: 2rem; }
+    .cert-info h4 { font-size: 1.2rem; margin-bottom: 4px; font-weight: 700; }
+    .cert-info p { color: var(--muted); font-size: 0.9rem; }
+    .cert-year { margin-right: auto; font-size: 0.9rem; color: var(--accent); font-weight: 600; }
 
-    /* --- Footer --- */
+    /* ====== قسم التواصل ====== */
+    .contact-box {
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-card);
+      padding: 60px;
+      background: linear-gradient(135deg, var(--surface-hover), var(--glass));
+      backdrop-filter: blur(var(--blur-amount)) saturate(200%);
+      -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(200%);
+      display: flex; align-items: center; justify-content: space-between; gap: 40px;
+      box-shadow: var(--shadow-lg), inset 0 1px 0 var(--glass-highlight);
+    }
+    .contact-box h2 { font-size: clamp(2rem, 3.5vw, 3rem); letter-spacing: -0.04em; margin-top: 10px; font-weight: 800; }
+    .contact-box p { color: var(--muted); margin-top: 12px; font-size: 1.1rem; max-width: 500px; }
+    
+    .contact-form { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 500px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group label { font-size: 0.9rem; color: var(--muted); font-weight: 500; }
+    .form-group input, .form-group textarea {
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--glass-border);
+      background: var(--surface);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+      transition: var(--transition);
+      outline: none;
+      backdrop-filter: blur(10px);
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    /* ====== الفوتر ====== */
     .footer {
-      padding: 40px 0;
+      padding: 50px 0;
       color: var(--muted);
       font-size: 0.9rem;
-      display: flex; justify-content: space-between; gap: 20px;
+      display: flex; justify-content: space-between; align-items: center; gap: 20px;
       border-top: 1px solid var(--glass-border);
-      margin-top: 40px;
+      margin-top: 60px;
     }
-    .social { display: flex; gap: 20px; }
-    .social a { transition: color 0.3s; font-weight: 500; }
-    .social a:hover { color: var(--accent); }
+    .social { display: flex; gap: 24px; }
+    .social a { transition: color 0.3s, transform 0.3s; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+    .social a:hover { color: var(--accent); transform: translateY(-3px); }
 
-    /* --- Responsive Mobile --- */
-    @media(max-width: 900px) {
+    /* ====== Scroll Reveal ====== */
+    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ====== التجاوب ====== */
+    @media(max-width: 1000px) {
       .hero { grid-template-columns: 1fr; padding: 80px 0 40px; gap: 40px; text-align: center; }
-      .orb-wrap { min-height: 200px; grid-row: 1; }
-      .orb { width: 180px; }
-      .orb:after { font-size: 60px; }
+      .orb-wrap { min-height: 250px; grid-row: 1; }
+      .orb { width: 220px; }
+      .orb:after { font-size: 80px; }
       .cta { justify-content: center; }
       .lead { margin: 0 auto; }
-      .grid { grid-template-columns: repeat(2, 1fr); }
       .links { display: none; }
       .menu-btn { display: block; }
       .links.open {
-        display: flex; position: absolute; top: 75px; left: 0; right: 0;
-        padding: 24px; background: var(--glass); border: 1px solid var(--glass-border);
-        border-radius: var(--radius-card); flex-direction: column; gap: 16px;
+        display: flex; position: absolute; top: 80px; left: 0; right: 0;
+        padding: 30px; background: var(--glass); border: 1px solid var(--glass-border);
+        border-radius: var(--radius-card); flex-direction: column; gap: 20px;
         backdrop-filter: blur(var(--blur-amount));
-        box-shadow: var(--shadow);
+        box-shadow: var(--shadow-lg);
       }
-      .about { grid-template-columns: 1fr; }
-      .contact { flex-direction: column; align-items: flex-start; padding: 36px; }
-      .footer { flex-direction: column; text-align: center; }
-      .social { justify-content: center; }
+      .about-grid { grid-template-columns: 1fr; }
+      .contact-box { flex-direction: column; align-items: flex-start; padding: 40px; }
     }
     @media(max-width: 600px) {
-      .grid { grid-template-columns: 1fr; }
-      .hero h1 { font-size: 2.8rem; }
       .wrap { width: min(100% - 28px, var(--max)); }
-      .contact { padding: 28px; }
+      .hero h1 { font-size: 3rem; }
+      .grid { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; text-align: center; }
+      .social { justify-content: center; }
+      .cert-item { flex-direction: column; align-items: flex-start; text-align: left; }
+      .cert-year { margin-right: 0; margin-top: 8px; }
+      .contact-box { padding: 30px; }
     }
   </style>
 </head>
@@ -344,6 +426,7 @@
       <a href="#" onclick="showPage('home')" data-en="Home" data-ar="الرئيسية">الرئيسية</a>
       <a href="#" onclick="showPage('work')" data-en="Work" data-ar="الأعمال">الأعمال</a>
       <a href="#" onclick="showPage('about')" data-en="About" data-ar="عني">عني</a>
+      <a href="#" onclick="showPage('certs')" data-en="Certifications" data-ar="الشهادات">الشهادات</a>
       <a href="#" onclick="showPage('contact')" data-en="Contact" data-ar="تواصل">تواصل</a>
     </nav>
     <div class="actions">
@@ -354,7 +437,7 @@
   </header>
 
   <main class="wrap">
-    <!-- HOME PAGE -->
+    <!-- ================= الصفحة الرئيسية ================= -->
     <div class="page active" id="page-home">
       <section class="hero">
         <div>
@@ -366,100 +449,183 @@
             <span data-en="Building ideas" data-ar="أحوّل الأفكار">أحوّل الأفكار</span><br>
             <span class="gradient" data-en="into digital things." data-ar="إلى حلول رقمية.">إلى حلول رقمية.</span>
           </h1>
-          <p class="lead" data-en="I'm Jafar Ahmed, a recent Software Engineering graduate from the University of Babylon. I'm passionate about building practical digital experiences." data-ar="أنا جعفر أحمد، خريج هندسة برمجيات حديث من جامعة بابل. شغوف ببناء تجارب رقمية عملية.">أنا جعفر أحمد، خريج هندسة برمجيات حديث من جامعة بابل. شغوف ببناء تجارب رقمية عملية.</p>
+          <p class="lead" data-en="I'm Jafar Ahmed, a recent Software Engineering graduate from the University of Babylon. I'm passionate about building practical digital experiences, databases, and reliable systems." data-ar="أنا جعفر أحمد، خريج هندسة برمجيات حديث من جامعة بابل. شغوف ببناء تجارب رقمية عملية وقواعد بيانات وأنظمة موثوقة.">أنا جعفر أحمد، خريج هندسة برمجيات حديث من جامعة بابل. شغوف ببناء تجارب رقمية عملية وقواعد بيانات وأنظمة موثوقة.</p>
           <div class="cta">
             <a class="btn primary" href="#" onclick="showPage('work')" data-en="Explore my work ↗" data-ar="استكشف أعمالي ↗">استكشف أعمالي ↗</a>
             <a class="btn secondary" href="#" onclick="showPage('contact')" data-en="Get in touch" data-ar="تواصل وياي">تواصل وياي</a>
           </div>
         </div>
-        <div class="orb-wrap"><div class="orb"></div></div>
+        <div class="orb-wrap">
+          <div class="orb-glow"></div>
+          <div class="orb"></div>
+        </div>
       </section>
-    </div>
-
-    <!-- WORK PAGE -->
-    <div class="page" id="page-work">
-      <section>
+      
+      <section class="reveal">
         <div class="section-head">
-          <span class="kicker" data-en="Selected projects" data-ar="مشاريع مختارة">مشاريع مختارة</span>
-          <h2 data-en="Things I've worked on." data-ar="أعمال اشتغلت عليها.">أعمال اشتغلت عليها.</h2>
-          <p class="sub" data-en="A selection of academic and personal projects." data-ar="مجموعة من المشاريع الدراسية والشخصية.">مجموعة من المشاريع الدراسية والشخصية.</p>
+          <span class="kicker" data-en="Highlights" data-ar="أبرز الملامح">أبرز الملامح</span>
+          <h2 data-en="What I do best." data-ar="ما أُتقنه.">ما أُتقنه.</h2>
         </div>
         <div class="grid">
           <article class="card">
-            <div class="project-top"><span class="project-icon">▦</span><span class="tag" data-en="Web application" data-ar="تطبيق ويب">تطبيق ويب</span></div>
-            <h3 data-en="Student Course Registration" data-ar="نظام تسجيل الطلبة">نظام تسجيل الطلبة</h3>
-            <p data-en="A web-based system for managing students, courses, and registrations." data-ar="نظام ويب لإدارة الطلبة والمواد والتسجيلات.">نظام ويب لإدارة الطلبة والمواد والتسجيلات.</p>
-            <div class="stack">ASP.NET Core MVC · .NET 8 · SQL</div>
+            <div class="project-top"><span class="project-icon">💻</span></div>
+            <h3 data-en="Web Development" data-ar="تطوير الويب">تطوير الويب</h3>
+            <p data-en="Building robust and scalable web applications using modern frameworks and databases." data-ar="بناء تطبيقات ويب قوية وقابلة للتوسع باستخدام أطر عمل حديثة وقواعد بيانات.">بناء تطبيقات ويب قوية وقابلة للتوسع باستخدام أطر عمل حديثة وقواعد بيانات.</p>
           </article>
           <article class="card">
-            <div class="project-top"><span class="project-icon">◫</span><span class="tag" data-en="Database" data-ar="قاعدة بيانات">قاعدة بيانات</span></div>
-            <h3 data-en="Personal Expense Manager" data-ar="مدير المصروفات الشخصية">مدير المصروفات الشخصية</h3>
-            <p data-en="An expense-tracking project focused on recording and organizing spending." data-ar="مشروع لتسجيل المصروفات الشخصية وتنظيمها.">مشروع لتسجيل المصروفات الشخصية وتنظيمها.</p>
-            <div class="stack">MySQL · SQL · HCI</div>
+            <div class="project-top"><span class="project-icon">🗄️</span></div>
+            <h3 data-en="Database Design" data-ar="تصميم قواعد البيانات">تصميم قواعد البيانات</h3>
+            <p data-en="Designing efficient, reliable, and normalized relational databases for real-world applications." data-ar="تصميم قواعد بيانات علائقية فعالة وموثوقة ومنظمة لتطبيقات العالم الحقيقي.">تصميم قواعد بيانات علائقية فعالة وموثوقة ومنظمة لتطبيقات العالم الحقيقي.</p>
           </article>
           <article class="card">
-            <div class="project-top"><span class="project-icon">⌁</span><span class="tag" data-en="Machine learning" data-ar="تعلم الآلة">تعلم الآلة</span></div>
-            <h3 data-en="Heart Disease Prediction" data-ar="توقع أمراض القلب">توقع أمراض القلب</h3>
-            <p data-en="An academic machine-learning project exploring predictive modelling." data-ar="مشروع أكاديمي في تعلم الآلة لبناء نموذج تنبؤي.">مشروع أكاديمي في تعلم الآلة لبناء نموذج تنبؤي.</p>
-            <div class="stack">Python · Machine Learning</div>
-          </article>
-          <article class="card">
-            <div class="project-top"><span class="project-icon">✳</span><span class="tag" data-en="Database design" data-ar="تصميم قاعدة بيانات">تصميم قاعدة بيانات</span></div>
-            <h3 data-en="Sakeena App" data-ar="تطبيق سكينة">تطبيق سكينة</h3>
-            <p data-en="A database-design project covering data structure and relationships." data-ar="مشروع تصميم قاعدة بيانات يشمل هيكلة البيانات والعلاقات.">مشروع تصميم قاعدة بيانات يشمل هيكلة البيانات والعلاقات.</p>
-            <div class="stack">Database Design · SQL</div>
-          </article>
-          <article class="card">
-            <div class="project-top"><span class="project-icon">⌘</span><span class="tag" data-en="Artificial intelligence" data-ar="ذكاء اصطناعي">ذكاء اصطناعي</span></div>
-            <h3 data-en="AI Search Project" data-ar="مشروع البحث بالذكاء الاصطناعي">مشروع البحث بالذكاء الاصطناعي</h3>
-            <p data-en="An exploration of artificial-intelligence search strategies." data-ar="تطبيق يستكشف خوارزميات البحث في الذكاء الاصطناعي.">تطبيق يستكشف خوارزميات البحث في الذكاء الاصطناعي.</p>
-            <div class="stack">AI · Search Algorithms</div>
-          </article>
-          <article class="card">
-            <div class="project-top"><span class="project-icon">◈</span><span class="tag" data-en="Desktop application" data-ar="تطبيق مكتبي">تطبيق مكتبي</span></div>
-            <h3 data-en="Graphics Project" data-ar="مشروع الرسوميات">مشروع الرسوميات</h3>
-            <p data-en="A desktop graphics project experimenting with drawing and shapes." data-ar="مشروع رسوميات مكتبي لتجربة الرسم والأشكال.">مشروع رسوميات مكتبي لتجربة الرسم والأشكال.</p>
-            <div class="stack">C# · Windows Forms</div>
+            <div class="project-top"><span class="project-icon">🤖</span></div>
+            <h3 data-en="Machine Learning" data-ar="تعلم الآلة">تعلم الآلة</h3>
+            <p data-en="Exploring data analysis and predictive modeling to extract insights and build intelligent systems." data-ar="استكشاف تحليل البيانات والنمذجة التنبؤية لاستخراج الرؤى وبناء أنظمة ذكية.">استكشاف تحليل البيانات والنمذجة التنبؤية لاستخراج الرؤى وبناء أنظمة ذكية.</p>
           </article>
         </div>
       </section>
     </div>
 
-    <!-- ABOUT PAGE -->
+    <!-- ================= صفحة الأعمال ================= -->
+    <div class="page" id="page-work">
+      <section>
+        <div class="section-head reveal">
+          <span class="kicker" data-en="Portfolio" data-ar="معرض الأعمال">معرض الأعمال</span>
+          <h2 data-en="Projects I've built." data-ar="مشاريع قمت ببنائها.">مشاريع قمت ببنائها.</h2>
+          <p class="sub" data-en="A curated list of academic and personal projects." data-ar="قائمة مختارة من المشاريع الأكاديمية والشخصية.">قائمة مختارة من المشاريع الأكاديمية والشخصية.</p>
+        </div>
+        <div class="grid">
+          <article class="card reveal">
+            <div class="project-top"><span class="project-icon">🏫</span><span class="tag" data-en="Web App" data-ar="تطبيق ويب">تطبيق ويب</span></div>
+            <h3 data-en="Student Course Registration" data-ar="نظام تسجيل الطلبة">نظام تسجيل الطلبة</h3>
+            <p data-en="A web-based system for managing students, courses, and registrations with a structured database." data-ar="نظام ويب لإدارة الطلبة والمواد والتسجيلات باستخدام قاعدة بيانات منظمة.">نظام ويب لإدارة الطلبة والمواد والتسجيلات باستخدام قاعدة بيانات منظمة.</p>
+            <div class="stack">ASP.NET Core MVC · .NET 8 · SQL Server</div>
+          </article>
+          <article class="card reveal">
+            <div class="project-top"><span class="project-icon">💰</span><span class="tag" data-en="Database" data-ar="قاعدة بيانات">قاعدة بيانات</span></div>
+            <h3 data-en="Personal Expense Manager" data-ar="مدير المصروفات الشخصية">مدير المصروفات الشخصية</h3>
+            <p data-en="An expense-tracking project focused on recording, organizing, and reviewing personal spending." data-ar="مشروع لتسجيل المصروفات الشخصية وتنظيمها ومراجعة الإنفاق.">مشروع لتسجيل المصروفات الشخصية وتنظيمها ومراجعة الإنفاق.</p>
+            <div class="stack">MySQL · SQL · HCI</div>
+          </article>
+          <article class="card reveal">
+            <div class="project-top"><span class="project-icon">❤️</span><span class="tag" data-en="ML" data-ar="تعلم الآلة">تعلم الآلة</span></div>
+            <h3 data-en="Heart Disease Prediction" data-ar="توقع أمراض القلب">توقع أمراض القلب</h3>
+            <p data-en="An academic machine-learning project exploring data analysis and predictive modelling." data-ar="مشروع أكاديمي في تعلم الآلة لتحليل البيانات وبناء نموذج تنبؤي.">مشروع أكاديمي في تعلم الآلة لتحليل البيانات وبناء نموذج تنبؤي.</p>
+            <div class="stack">Python · Scikit-Learn · Pandas</div>
+          </article>
+          <article class="card reveal">
+            <div class="project-top"><span class="project-icon">🕌</span><span class="tag" data-en="Database" data-ar="قاعدة بيانات">قاعدة بيانات</span></div>
+            <h3 data-en="Sakeena App" data-ar="تطبيق سكينة">تطبيق سكينة</h3>
+            <p data-en="A database-design project covering data structure, relationships, and application requirements." data-ar="مشروع تصميم قاعدة بيانات يشمل هيكلة البيانات والعلاقات ومتطلبات التطبيق.">مشروع تصميم قاعدة بيانات يشمل هيكلة البيانات والعلاقات ومتطلبات التطبيق.</p>
+            <div class="stack">Database Design · SQL</div>
+          </article>
+          <article class="card reveal">
+            <div class="project-top"><span class="project-icon">🔍</span><span class="tag" data-en="AI" data-ar="ذكاء اصطناعي">ذكاء اصطناعي</span></div>
+            <h3 data-en="AI Search Project" data-ar="مشروع البحث بالذكاء الاصطناعي">مشروع البحث بالذكاء الاصطناعي</h3>
+            <p data-en="An exploration of artificial-intelligence search strategies and problem-solving approaches." data-ar="تطبيق يستكشف خوارزميات البحث في الذكاء الاصطناعي وطرق حل المشكلات.">تطبيق يستكشف خوارزميات البحث في الذكاء الاصطناعي وطرق حل المشكلات.</p>
+            <div class="stack">Python · AI · Search Algorithms</div>
+          </article>
+          <article class="card reveal">
+            <div class="project-top"><span class="project-icon">🎨</span><span class="tag" data-en="Desktop" data-ar="مكتبي">مكتبي</span></div>
+            <h3 data-en="Graphics Project" data-ar="مشروع الرسوميات">مشروع الرسوميات</h3>
+            <p data-en="A desktop graphics project experimenting with drawing, shapes, and visual programming concepts." data-ar="مشروع رسوميات مكتبي لتجربة الرسم والأشكال ومفاهيم البرمجة المرئية.">مشروع رسوميات مكتبي لتجربة الرسم والأشكال ومفاهيم البرمجة المرئية.</p>
+            <div class="stack">C# · Windows Forms · GDI+</div>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <!-- ================= صفحة عني ================= -->
     <div class="page" id="page-about">
       <section>
-        <div class="section-head">
-          <span class="kicker" data-en="A little about me" data-ar="نبذة عني">نبذة عني</span>
+        <div class="section-head reveal">
+          <span class="kicker" data-en="About Me" data-ar="نبذة عني">نبذة عني</span>
           <h2 data-en="Curious by nature." data-ar="فضولي بطبيعتي.">فضولي بطبيعتي.</h2>
         </div>
-        <div class="about">
-          <div class="about-panel">
+        <div class="about-grid">
+          <div class="about-panel reveal">
             <h3 data-en="My approach" data-ar="أسلوبي">أسلوبي</h3>
-            <p data-en="I enjoy learning how systems work, designing reliable data structures, and developing applications that solve real problems. As a recent graduate, I'm ready to apply my academic knowledge to real-world challenges." data-ar="أستمتع بفهم طريقة عمل الأنظمة وتصميم قواعد بيانات موثوقة وتطوير تطبيقات تحل مشاكل حقيقية. كخريج حديث، أنا جاهز لتطبيق معرفتي الأكاديمية على تحديات العالم الحقيقي.">أستمتع بفهم طريقة عمل الأنظمة وتصميم قواعد بيانات موثوقة وتطوير تطبيقات تحل مشاكل حقيقية. كخريج حديث، أنا جاهز لتطبيق معرفتي الأكاديمية على تحديات العالم الحقيقي.</p>
+            <p data-en="I enjoy learning how systems work, designing reliable data structures, and developing applications that solve real problems. As a recent graduate from the University of Babylon, I'm ready to apply my academic knowledge to real-world challenges and continue growing as a developer." data-ar="أستمتع بفهم طريقة عمل الأنظمة وتصميم قواعد بيانات موثوقة وتطوير تطبيقات تحل مشاكل حقيقية. كخريج حديث من جامعة بابل، أنا جاهز لتطبيق معرفتي الأكاديمية على تحديات العالم الحقيقي ومواصلة النمو كمطور.">أستمتع بفهم طريقة عمل الأنظمة وتصميم قواعد بيانات موثوقة وتطوير تطبيقات تحل مشاكل حقيقية. كخريج حديث من جامعة بابل، أنا جاهز لتطبيق معرفتي الأكاديمية على تحديات العالم الحقيقي ومواصلة النمو كمطور.</p>
           </div>
-          <div class="about-panel">
-            <h3 data-en="Tools & technologies" data-ar="الأدوات والتقنيات">الأدوات والتقنيات</h3>
+          <div class="about-panel reveal">
+            <h3 data-en="Tools & Technologies" data-ar="الأدوات والتقنيات">الأدوات والتقنيات</h3>
             <p data-en="Technologies I've studied or used in coursework and projects." data-ar="تقنيات درستها أو استخدمتها في المشاريع الدراسية والتطبيقية.">تقنيات درستها أو استخدمتها في المشاريع الدراسية والتطبيقية.</p>
             <div class="skills">
               <span class="skill">C#</span><span class="skill">Java</span><span class="skill">Python</span>
               <span class="skill">SQL / MySQL</span><span class="skill">ASP.NET Core</span><span class="skill">HTML & CSS</span>
               <span class="skill">JavaScript</span><span class="skill">Flutter / Dart</span><span class="skill">Git</span>
+              <span class="skill">Machine Learning</span><span class="skill">Database Design</span>
             </div>
           </div>
         </div>
       </section>
     </div>
 
-    <!-- CONTACT PAGE -->
+    <!-- ================= صفحة الشهادات ================= -->
+    <div class="page" id="page-certs">
+      <section>
+        <div class="section-head reveal">
+          <span class="kicker" data-en="Certifications" data-ar="الشهادات">الشهادات</span>
+          <h2 data-en="Courses & Certificates." data-ar="الدورات والشهادات.">الدورات والشهادات.</h2>
+          <p class="sub" data-en="Academic and professional certifications I've earned." data-ar="الشهادات الأكاديمية والمهنية التي حصلت عليها.">الشهادات الأكاديمية والمهنية التي حصلت عليها.</p>
+        </div>
+        <div class="cert-list">
+          <div class="cert-item reveal">
+            <span class="cert-icon">🎓</span>
+            <div class="cert-info">
+              <h4 data-en="B.Sc. in Software Engineering" data-ar="بكالوريوس هندسة البرمجيات">بكالوريوس هندسة البرمجيات</h4>
+              <p data-en="University of Babylon" data-ar="جامعة بابل">جامعة بابل</p>
+            </div>
+            <span class="cert-year">2024</span>
+          </div>
+          <div class="cert-item reveal">
+            <span class="cert-icon">📜</span>
+            <div class="cert-info">
+              <h4 data-en="Database Design & SQL" data-ar="تصميم قواعد البيانات و SQL">تصميم قواعد البيانات و SQL</h4>
+              <p data-en="Academic Coursework" data-ar="مشروع دراسي">مشروع دراسي</p>
+            </div>
+            <span class="cert-year">2023</span>
+          </div>
+          <div class="cert-item reveal">
+            <span class="cert-icon">💡</span>
+            <div class="cert-info">
+              <h4 data-en="Machine Learning Fundamentals" data-ar="أساسيات تعلم الآلة">أساسيات تعلم الآلة</h4>
+              <p data-en="Academic Project" data-ar="مشروع أكاديمي">مشروع أكاديمي</p>
+            </div>
+            <span class="cert-year">2023</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ================= صفحة التواصل ================= -->
     <div class="page" id="page-contact">
       <section>
-        <div class="contact">
+        <div class="contact-box reveal">
           <div>
-            <span class="kicker" data-en="Have a project in mind?" data-ar="عندك فرصة أو مشروع؟">عندك فرصة أو مشروع؟</span>
-            <h2 data-en="Let's build something useful." data-ar="خلّينا نبني شي مفيد.">خلّينا نبني شي مفيد.</h2>
-            <p data-en="I'm open to internships, junior opportunities, and collaboration." data-ar="منفتح على فرص التدريب والعمل للمبتدئين والتعاون بالمشاريع.">منفتح على فرص التدريب والعمل للمبتدئين والتعاون بالمشاريع.</p>
+            <span class="kicker" data-en="Let's talk" data-ar="خلينا نتواصل">خلينا نتواصل</span>
+            <h2 data-en="Have a project in mind?" data-ar="عندك فرصة أو مشروع؟">عندك فرصة أو مشروع؟</h2>
+            <p data-en="I'm open to internships, junior opportunities, and collaboration. Feel free to reach out via email or connect with me on LinkedIn." data-ar="منفتح على فرص التدريب والعمل للمبتدئين والتعاون بالمشاريع. لا تتردد في التواصل معي عبر البريد الإلكتروني أو لينكد إن.">منفتح على فرص التدريب والعمل للمبتدئين والتعاون بالمشاريع. لا تتردد في التواصل معي عبر البريد الإلكتروني أو لينكد إن.</p>
+            <div style="margin-top: 24px; display: flex; gap: 16px; flex-wrap: wrap;">
+              <a class="btn primary" href="mailto:salib6660@gmail.com" data-en="Email me ↗" data-ar="راسلني ↗">راسلني ↗</a>
+              <a class="btn secondary" href="https://www.linkedin.com/in/e7dx" target="_blank" rel="noreferrer" data-en="LinkedIn ↗" data-ar="لينكد إن ↗">لينكد إن ↗</a>
+            </div>
           </div>
-          <a class="btn primary" href="mailto:salib6660@gmail.com" data-en="Email me ↗" data-ar="راسلني ↗">راسلني ↗</a>
+          <form class="contact-form" onsubmit="event.preventDefault(); alert('شكراً لتواصلك! سأرد عليك قريباً.');">
+            <div class="form-group">
+              <label data-en="Your Name" data-ar="اسمك">اسمك</label>
+              <input type="text" required>
+            </div>
+            <div class="form-group">
+              <label data-en="Your Email" data-ar="بريدك الإلكتروني">بريدك الإلكتروني</label>
+              <input type="email" required>
+            </div>
+            <div class="form-group">
+              <label data-en="Your Message" data-ar="رسالتك">رسالتك</label>
+              <textarea required></textarea>
+            </div>
+            <button type="submit" class="btn primary" style="width: 100%; justify-content: center;" data-en="Send Message" data-ar="إرسال الرسالة">إرسال الرسالة</button>
+          </form>
         </div>
       </section>
     </div>
@@ -474,18 +640,16 @@
   </main>
 
   <script>
+    // ==== Theme Toggle ====
     const root = document.documentElement;
     const themeBtn = document.getElementById('theme');
-    const langBtn = document.getElementById('lang');
-    const menuBtn = document.getElementById('menu');
-    
-    // Theme Toggle
     themeBtn.onclick = () => {
       root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
       themeBtn.textContent = root.dataset.theme === 'dark' ? '☼' : '☾';
     };
 
-    // Language Toggle
+    // ==== Language Toggle ====
+    const langBtn = document.getElementById('lang');
     let isAr = true;
     langBtn.onclick = () => {
       isAr = !isAr;
@@ -497,18 +661,39 @@
       });
     };
 
-    // Page Navigation Logic
+    // ==== Page Navigation ====
     function showPage(pageId) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById('page-' + pageId).classList.add('active');
       document.getElementById('navlinks').classList.remove('open');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      // إعادة تفعيل الأنيميشن للصفحة الجديدة
+      setTimeout(() => {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.remove('visible'));
+        checkReveal();
+      }, 100);
     }
 
-    // Mobile Menu
-    menuBtn.onclick = () => document.getElementById('navlinks').classList.toggle('open');
-    
-    // Year
+    // ==== Mobile Menu ====
+    document.getElementById('menu').onclick = () => document.getElementById('navlinks').classList.toggle('open');
+
+    // ==== Scroll Reveal Animation ====
+    function checkReveal() {
+      const reveals = document.querySelectorAll('.reveal');
+      reveals.forEach(el => {
+        const windowHeight = window.innerHeight;
+        const elementTop = el.getBoundingClientRect().top;
+        const elementVisible = 100;
+        if (elementTop < windowHeight - elementVisible) {
+          el.classList.add('visible');
+        }
+      });
+    }
+    window.addEventListener('scroll', checkReveal);
+    window.addEventListener('load', checkReveal);
+
+    // ==== Year ====
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
