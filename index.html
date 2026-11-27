@@ -3,12 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <meta name="description" content="Jafar Ahmed — Software Engineering Graduate Portfolio">
+  <meta name="description" content="Jafar Ahmed — Software Engineering Graduate Portfolio. Explore my projects, skills, and certifications.">
   <meta name="theme-color" content="#08080a">
   <title>جعفر أحمد — معرض أعمال</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
   <style>
     /* ====== المتغيرات والألوان ====== */
     :root {
@@ -67,8 +68,71 @@
     a { color: inherit; text-decoration: none; }
     img { max-width: 100%; height: auto; display: block; }
     .wrap { width: min(var(--max), calc(100% - 40px)); margin: auto; }
+
+    /* ====== خلفية البكسلات (Grid) ====== */
+    .bg-grid {
+      position: fixed; inset: 0; z-index: -2;
+      background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+      -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+    }
+    [data-theme="light"] .bg-grid {
+      background-image: 
+        linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+    }
     
-    /* ====== شريط التنقل الزجاجي (تابات) ====== */
+    /* مجسمات 3D تفاعلية */
+    .shape {
+      position: fixed; border-radius: 50%; z-index: -1;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      opacity: 0.15; filter: blur(2px);
+      transition: transform 0.1s ease-out; /* سرعة الاستجابة للماوس */
+      pointer-events: none;
+    }
+    .shape-1 { width: 150px; height: 150px; top: 15%; left: 10%; }
+    .shape-2 { width: 100px; height: 100px; top: 60%; right: 15%; border-radius: 20%; }
+    .shape-3 { width: 80px; height: 80px; bottom: 20%; left: 20%; border-radius: 30%; }
+    .shape-4 { width: 200px; height: 200px; top: 40%; right: 40%; opacity: 0.05; }
+
+    /* ====== رسالة الترحيب ====== */
+    .welcome-screen {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--bg);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 20px;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    .welcome-screen.hidden { opacity: 0; visibility: hidden; }
+    .welcome-content {
+      max-width: 500px;
+      animation: fadeInUp 1s ease forwards;
+    }
+    .welcome-content h1 {
+      font-size: 2.5rem; font-weight: 800; margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .welcome-content p {
+      color: var(--muted); font-size: 1.1rem; margin-bottom: 32px;
+    }
+    .start-btn {
+      padding: 16px 40px; border-radius: var(--radius-pill);
+      background: var(--text); color: var(--bg); font-weight: 700; font-size: 1.1rem;
+      border: none; cursor: pointer; transition: var(--transition);
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .start-btn:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(255,255,255,0.1); }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ====== شريط التنقل الزجاجي ====== */
     .nav {
       position: sticky; top: 16px; z-index: 1000;
       margin: 16px auto 0;
@@ -121,10 +185,6 @@
       0%, 100% { box-shadow: 0 0 20px var(--accent-glow); }
       50% { box-shadow: 0 0 40px var(--accent-glow); }
     }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
     .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
@@ -151,11 +211,12 @@
     }
     .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-tertiary); box-shadow: 0 0 12px var(--accent-tertiary); }
     .hero h1 {
-      font-size: clamp(3rem, 6.5vw, 6rem);
-      letter-spacing: -0.05em;
-      line-height: 1.05;
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      letter-spacing: -0.04em;
+      line-height: 1.15;
       margin: 28px 0 24px;
       font-weight: 800;
+      word-break: break-word;
     }
     .gradient {
       background: linear-gradient(135deg, var(--text) 0%, var(--accent) 50%, var(--accent-secondary) 100%);
@@ -189,7 +250,7 @@
 
     .orb-wrap { display: grid; place-items: center; min-height: 350px; position: relative; }
     .orb {
-      width: min(320px, 75vw);
+      width: min(280px, 70vw);
       aspect-ratio: 1;
       border-radius: 45%;
       background: radial-gradient(circle at 30% 25%, #e0eaff 0, #7fa6d9 15%, #3a507a 40%, #151a2a 70%, #05060a 90%);
@@ -202,7 +263,7 @@
       content: 'J.';
       position: absolute; inset: 0;
       display: grid; place-items: center;
-      color: #fff; font-size: 110px; font-weight: 800; letter-spacing: -0.08em;
+      color: #fff; font-size: 100px; font-weight: 800; letter-spacing: -0.08em;
       text-shadow: 0 8px 30px rgba(0,0,0,0.6);
       transform: rotate(15deg);
     }
@@ -225,14 +286,14 @@
       display: block;
     }
     .section-head h2 {
-      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-size: clamp(2rem, 4vw, 3.5rem);
       letter-spacing: -0.04em;
       font-weight: 800;
     }
     .sub { color: var(--muted); font-size: 1.1rem; margin-top: 16px; max-width: 600px; margin-inline: auto; }
 
     /* ====== شبكة المشاريع والكروت الزجاجية ====== */
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
     .card {
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-card);
@@ -246,6 +307,7 @@
       box-shadow: var(--shadow), inset 0 1px 0 var(--glass-highlight);
       position: relative;
       overflow: hidden;
+      cursor: pointer;
     }
     .card::before {
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
@@ -281,6 +343,56 @@
     .card h3 { font-size: 1.3rem; margin-bottom: 12px; letter-spacing: -0.02em; font-weight: 700; }
     .card p { font-size: 0.95rem; color: var(--muted); margin-bottom: 24px; flex-grow: 1; line-height: 1.7; }
     .stack { font-size: 0.8rem; color: var(--accent); font-weight: 600; letter-spacing: 0.02em; }
+
+    /* ====== نافذة تفاصيل المشروع (Modal) ====== */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 2000;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden; transition: all 0.4s ease;
+      padding: 20px;
+    }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal-content {
+      background: var(--bg-alt);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-card);
+      width: 100%; max-width: 800px;
+      max-height: 90vh; overflow-y: auto;
+      padding: 0;
+      transform: translateY(30px) scale(0.95);
+      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+    .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
+    
+    .modal-close {
+      position: absolute; top: 16px; right: 16px;
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--surface); border: 1px solid var(--glass-border);
+      color: var(--text); font-size: 1.2rem; cursor: pointer;
+      display: grid; place-items: center; z-index: 10;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+    }
+    .modal-close:hover { background: var(--surface-hover); transform: rotate(90deg); }
+    
+    .modal-img {
+      width: 100%; height: 300px; object-fit: cover;
+      border-radius: var(--radius-card) var(--radius-card) 0 0;
+      background: var(--surface);
+    }
+    .modal-body { padding: 32px; }
+    .modal-body h2 { font-size: 2rem; margin-bottom: 12px; font-weight: 800; }
+    .modal-body .modal-desc { color: var(--muted); margin-bottom: 24px; line-height: 1.8; font-size: 1rem; }
+    .modal-body .stack { margin-bottom: 24px; display: block; font-size: 0.9rem; }
+    
+    .modal-features { margin-top: 24px; }
+    .modal-features h4 { margin-bottom: 12px; font-size: 1.1rem; }
+    .modal-features ul { padding-right: 20px; color: var(--muted); }
+    .modal-features li { margin-bottom: 8px; }
 
     /* ====== قسم نبذة عني ====== */
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
@@ -374,19 +486,18 @@
     .social-btn:hover { transform: translateY(-5px) scale(1.05); box-shadow: var(--shadow-lg); border-color: var(--accent); color: var(--accent); }
     .social-btn:hover svg { transform: scale(1.1); }
     
-    /* ألوان مخصصة لكل زر عند التمرير */
     .social-btn.github:hover { color: #fff; border-color: #fff; background: #333; }
     .social-btn.linkedin:hover { color: #0a66c2; border-color: #0a66c2; background: rgba(10,102,194,0.1); }
     .social-btn.telegram:hover { color: #26A5E4; border-color: #26A5E4; background: rgba(38,165,228,0.1); }
     .social-btn.instagram:hover { color: #E1306C; border-color: #E1306C; background: rgba(225,48,108,0.1); }
     .social-btn.whatsapp:hover { color: #25D366; border-color: #25D366; background: rgba(37,211,102,0.1); }
 
-    /* ====== التجاوب ====== */
+    /* ====== التجاوب مع الموبايل ====== */
     @media(max-width: 1000px) {
       .hero { grid-template-columns: 1fr; padding: 80px 0 40px; gap: 40px; text-align: center; }
       .orb-wrap { min-height: 250px; grid-row: 1; }
-      .orb { width: 220px; }
-      .orb:after { font-size: 80px; }
+      .orb { width: 200px; }
+      .orb:after { font-size: 70px; }
       .cta { justify-content: center; }
       .lead { margin: 0 auto; }
       .links { display: none; }
@@ -403,16 +514,35 @@
     }
     @media(max-width: 600px) {
       .wrap { width: min(100% - 28px, var(--max)); }
-      .hero h1 { font-size: 3rem; }
+      .hero h1 { font-size: 2.2rem; } /* تصغير الخط للموبايل */
       .grid { grid-template-columns: 1fr; }
       .cert-item { flex-direction: column; align-items: flex-start; text-align: left; }
       .cert-year { margin-right: 0; margin-top: 8px; }
       .contact-box { padding: 30px; }
       .social-btn { width: 100%; justify-content: center; }
+      .modal-img { height: 200px; }
+      .welcome-content h1 { font-size: 1.8rem; }
     }
   </style>
 </head>
 <body>
+  <!-- خلفية البكسلات -->
+  <div class="bg-grid"></div>
+  <!-- مجسمات تفاعلية -->
+  <div class="shape shape-1"></div>
+  <div class="shape shape-2"></div>
+  <div class="shape shape-3"></div>
+  <div class="shape shape-4"></div>
+
+  <!-- رسالة الترحيب -->
+  <div class="welcome-screen" id="welcomeScreen">
+    <div class="welcome-content">
+      <h1>أهلاً بك في عالم جعفر 👋</h1>
+      <p>مرحباً! أنا جعفر أحمد، خريج هندسة برمجيات. هنا يمكنك استكشاف مشاريعي، مهاراتي، والشهادات التي حصلت عليها. اضغط على الزر للبدء.</p>
+      <button class="start-btn" onclick="closeWelcome()">ابدأ الرحلة ↙</button>
+    </div>
+  </div>
+
   <header class="nav">
     <a class="brand" onclick="scrollToSection('home')">e7dx<span>.</span></a>
     <nav class="links" id="navlinks">
@@ -443,7 +573,10 @@
         </h1>
         <p class="lead" data-en="I'm Jafar Ahmed, a recent Software Engineering graduate from the University of Babylon. I'm passionate about building practical digital experiences, databases, and reliable systems." data-ar="أنا جعفر أحمد، خريج هندسة برمجيات حديث من جامعة بابل. شغوف ببناء تجارب رقمية عملية وقواعد بيانات وأنظمة موثوقة.">أنا جعفر أحمد، خريج هندسة برمجيات حديث من جامعة بابل. شغوف ببناء تجارب رقمية عملية وقواعد بيانات وأنظمة موثوقة.</p>
         <div class="cta">
-          <a class="btn primary" onclick="scrollToSection('work')" data-en="Explore my work ↗" data-ar="استكشف أعمالي ↗">استكشف أعمالي ↗</a>
+          <a class="btn primary" href="cv.pdf" download target="_blank">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span data-en="Download CV" data-ar="تحميل السيرة الذاتية">تحميل السيرة الذاتية</span>
+          </a>
           <a class="btn secondary" href="https://wa.me/9647806667626" target="_blank">
             <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
             <span data-en="Contact Me" data-ar="راسلني">راسلني</span>
@@ -485,40 +618,46 @@
       <div class="section-head reveal">
         <span class="kicker" data-en="Portfolio" data-ar="معرض الأعمال">معرض الأعمال</span>
         <h2 data-en="Projects I've built." data-ar="مشاريع قمت ببنائها.">مشاريع قمت ببنائها.</h2>
-        <p class="sub" data-en="A curated list of academic and personal projects." data-ar="قائمة مختارة من المشاريع الأكاديمية والشخصية.">قائمة مختارة من المشاريع الأكاديمية والشخصية.</p>
+        <p class="sub" data-en="A curated list of academic and personal projects. Click any project to view details." data-ar="قائمة مختارة من المشاريع الأكاديمية والشخصية. اضغط على أي مشروع لعرض التفاصيل.">قائمة مختارة من المشاريع الأكاديمية والشخصية. اضغط على أي مشروع لعرض التفاصيل.</p>
       </div>
       <div class="grid">
-        <article class="card reveal">
+        <!-- Project 1 -->
+        <article class="card reveal" onclick="openModal('project1')">
           <div class="project-top"><span class="project-icon">🏫</span><span class="tag" data-en="Web App" data-ar="تطبيق ويب">تطبيق ويب</span></div>
           <h3 data-en="Student Course Registration" data-ar="نظام تسجيل الطلبة">نظام تسجيل الطلبة</h3>
           <p data-en="A web-based system for managing students, courses, and registrations with a structured database." data-ar="نظام ويب لإدارة الطلبة والمواد والتسجيلات باستخدام قاعدة بيانات منظمة.">نظام ويب لإدارة الطلبة والمواد والتسجيلات باستخدام قاعدة بيانات منظمة.</p>
           <div class="stack">ASP.NET Core MVC · .NET 8 · SQL Server</div>
         </article>
-        <article class="card reveal">
+        <!-- Project 2 -->
+        <article class="card reveal" onclick="openModal('project2')">
           <div class="project-top"><span class="project-icon">💰</span><span class="tag" data-en="Database" data-ar="قاعدة بيانات">قاعدة بيانات</span></div>
           <h3 data-en="Personal Expense Manager" data-ar="مدير المصروفات الشخصية">مدير المصروفات الشخصية</h3>
           <p data-en="An expense-tracking project focused on recording, organizing, and reviewing personal spending." data-ar="مشروع لتسجيل المصروفات الشخصية وتنظيمها ومراجعة الإنفاق.">مشروع لتسجيل المصروفات الشخصية وتنظيمها ومراجعة الإنفاق.</p>
           <div class="stack">MySQL · SQL · HCI</div>
         </article>
-        <article class="card reveal">
+        <!-- Project 3 -->
+        <article class="card reveal" onclick="openModal('project3')">
           <div class="project-top"><span class="project-icon">❤️</span><span class="tag" data-en="ML" data-ar="تعلم الآلة">تعلم الآلة</span></div>
           <h3 data-en="Heart Disease Prediction" data-ar="توقع أمراض القلب">توقع أمراض القلب</h3>
           <p data-en="An academic machine-learning project exploring data analysis and predictive modelling." data-ar="مشروع أكاديمي في تعلم الآلة لتحليل البيانات وبناء نموذج تنبؤي.">مشروع أكاديمي في تعلم الآلة لتحليل البيانات وبناء نموذج تنبؤي.</p>
           <div class="stack">Python · Scikit-Learn · Pandas</div>
         </article>
-        <article class="card reveal">
+        <!-- Project 4 -->
+        <article class="card reveal" onclick="openModal('project4')">
           <div class="project-top"><span class="project-icon">🕌</span><span class="tag" data-en="Database" data-ar="قاعدة بيانات">قاعدة بيانات</span></div>
           <h3 data-en="Sakeena App" data-ar="تطبيق سكينة">تطبيق سكينة</h3>
           <p data-en="A database-design project covering data structure, relationships, and application requirements." data-ar="مشروع تصميم قاعدة بيانات يشمل هيكلة البيانات والعلاقات ومتطلبات التطبيق.">مشروع تصميم قاعدة بيانات يشمل هيكلة البيانات والعلاقات ومتطلبات التطبيق.</p>
           <div class="stack">Database Design · SQL</div>
         </article>
-        <article class="card reveal">
+        <!-- Project 5 -->
+        <article class="card reveal" onclick="openModal('project5')">
           <div class="project-top"><span class="project-icon">🔍</span><span class="tag" data-en="AI" data-ar="ذكاء اصطناعي">ذكاء اصطناعي</span></div>
           <h3 data-en="AI Search Project" data-ar="مشروع البحث بالذكاء الاصطناعي">مشروع البحث بالذكاء الاصطناعي</h3>
           <p data-en="An exploration of artificial-intelligence search strategies and problem-solving approaches." data-ar="تطبيق يستكشف خوارزميات البحث في الذكاء الاصطناعي وطرق حل المشكلات.">تطبيق يستكشف خوارزميات البحث في الذكاء الاصطناعي وطرق حل المشكلات.</p>
           <div class="stack">Python · AI · Search Algorithms</div>
         </article>
-        <article class="card reveal">
+        <!-- Project 6 -->
+        <article class="card reveal" onclick="openModal('project6')">
           <div class="project-top"><span class="project-icon">🎨</span><span class="tag" data-en="Desktop" data-ar="مكتبي">مكتبي</span></div>
           <h3 data-en="Graphics Project" data-ar="مشروع الرسوميات">مشروع الرسوميات</h3>
           <p data-en="A desktop graphics project experimenting with drawing, shapes, and visual programming concepts." data-ar="مشروع رسوميات مكتبي لتجربة الرسم والأشكال ومفاهيم البرمجة المرئية.">مشروع رسوميات مكتبي لتجربة الرسم والأشكال ومفاهيم البرمجة المرئية.</p>
@@ -637,6 +776,27 @@
     </footer>
   </main>
 
+  <!-- ================= نافذة تفاصيل المشروع (Modal) ================= -->
+  <div class="modal-overlay" id="projectModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <img id="modalImage" src="" alt="Project Image" class="modal-img">
+      <div class="modal-body">
+        <h2 id="modalTitle"></h2>
+        <p id="modalDesc" class="modal-desc"></p>
+        <span id="modalStack" class="stack"></span>
+        <div class="modal-features">
+          <h4 data-en="Key Features" data-ar="أهم الميزات">أهم الميزات</h4>
+          <ul id="modalFeatures"></ul>
+        </div>
+        <div style="margin-top: 30px; display: flex; gap: 12px;">
+          <a id="modalLive" href="#" target="_blank" class="btn primary" style="display: none;" data-en="Live Demo ↗" data-ar="عرض حي ↗">عرض حي ↗</a>
+          <a id="modalCode" href="#" target="_blank" class="btn secondary" style="display: none;" data-en="Source Code ↗" data-ar="الكود المصدري ↗">الكود المصدري ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     // ==== Theme Toggle ====
     const root = document.documentElement;
@@ -714,6 +874,151 @@
 
     // ==== Year ====
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ==== Welcome Screen Logic ====
+    function closeWelcome() {
+      document.getElementById('welcomeScreen').classList.add('hidden');
+    }
+
+    // ==== Project Data & Modal Logic ====
+    const projectsData = {
+      project1: {
+        titleAr: "نظام تسجيل الطلبة",
+        titleEn: "Student Course Registration",
+        descAr: "نظام ويب متكامل تم تطويره لإدارة عمليات تسجيل الطلبة في المواد الدراسية. يشمل النظام لوحة تحكم للمشرفين، واجهة للطلبة، وقاعدة بيانات علائقية منظمة.",
+        descEn: "A comprehensive web system developed to manage student course registration processes. The system includes an admin dashboard, student interface, and a structured relational database.",
+        stack: "ASP.NET Core MVC · .NET 8 · SQL Server · Entity Framework",
+        featuresAr: ["إدارة بيانات الطلبة والمواد", "نظام تسجيل وشروط مسبقة", "لوحة تحكم للمشرفين", "تقارير وإحصائيات"],
+        featuresEn: ["Student & course management", "Registration & prerequisites system", "Admin dashboard", "Reports & statistics"],
+        image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800",
+        live: "#",
+        code: "https://github.com/e7dx"
+      },
+      project2: {
+        titleAr: "مدير المصروفات الشخصية",
+        titleEn: "Personal Expense Manager",
+        descAr: "تطبيق يهدف إلى مساعدة المستخدمين على تتبع وإدارة مصروفاتهم اليومية والشهرية. يركز المشروع على تصميم قاعدة بيانات فعالة وتجربة مستخدم بسيطة (HCI).",
+        descEn: "An application aimed at helping users track and manage their daily and monthly expenses. The project focuses on efficient database design and simple user experience (HCI).",
+        stack: "MySQL · SQL · HCI Principles · Database Design",
+        featuresAr: ["تسجيل المصروفات اليومية", "تصنيفات مخصصة", "تقارير شهرية", "واجهة سهلة الاستخدام"],
+        featuresEn: ["Daily expense logging", "Custom categories", "Monthly reports", "User-friendly interface"],
+        image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=800",
+        live: "#",
+        code: "https://github.com/e7dx"
+      },
+      project3: {
+        titleAr: "توقع أمراض القلب",
+        titleEn: "Heart Disease Prediction",
+        descAr: "مشروع أكاديمي في مجال تعلم الآلة يهدف إلى بناء نموذج تنبؤي يمكنه تحديد احتمالية إصابة المريض بأمراض القلب بناءً على بياناته الطبية.",
+        descEn: "An academic machine learning project aimed at building a predictive model that can determine the likelihood of a patient having heart disease based on their medical data.",
+        stack: "Python · Pandas · Scikit-Learn · Matplotlib",
+        featuresAr: ["تحليل البيانات الطبية", "معالجة البيانات المفقودة", "بناء نموذج تصنيف", "تقييم دقة النموذج"],
+        featuresEn: ["Medical data analysis", "Missing data handling", "Classification model building", "Model accuracy evaluation"],
+        image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800",
+        live: "#",
+        code: "https://github.com/e7dx"
+      },
+      project4: {
+        titleAr: "تطبيق سكينة",
+        titleEn: "Sakeena App",
+        descAr: "مشروع تصميم قاعدة بيانات شامل لتطبيق يهدف إلى توفير بيئة هادئة ومفيدة. يركز المشروع على هيكلة البيانات، العلاقات، ومتطلبات التطبيق المختلفة.",
+        descEn: "A comprehensive database design project for an application aimed at providing a calm and useful environment. The project focuses on data structuring, relationships, and various application requirements.",
+        stack: "Database Design · ERD · SQL · Relational Algebra",
+        featuresAr: ["تصميم مخطط العلاقات (ERD)", "تطبيع قاعدة البيانات", "كتابة استعلامات SQL معقدة", "تحديد متطلبات النظام"],
+        featuresEn: ["Entity-Relationship Diagram (ERD)", "Database normalization", "Complex SQL query writing", "System requirements specification"],
+        image: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&q=80&w=800",
+        live: "#",
+        code: "https://github.com/e7dx"
+      },
+      project5: {
+        titleAr: "مشروع البحث بالذكاء الاصطناعي",
+        titleEn: "AI Search Project",
+        descAr: "تطبيق يستكشف خوارزميات البحث المختلفة في الذكاء الاصطناعي (مثل BFS, DFS, A*) وكيفية استخدامها لحل المشكلات المعقدة.",
+        descEn: "An application exploring various search algorithms in artificial intelligence (such as BFS, DFS, A*) and how they are used to solve complex problems.",
+        stack: "Python · AI Algorithms · Search Strategies",
+        featuresAr: ["تنفيذ خوارزميات BFS و DFS", "خوارزمية A* للبحث الأمثل", "واجهة تفاعلية لعرض المسار", "مقارنة أداء الخوارزميات"],
+        featuresEn: ["BFS and DFS implementation", "A* algorithm for optimal search", "Interactive path visualization", "Algorithm performance comparison"],
+        image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=800",
+        live: "#",
+        code: "https://github.com/e7dx"
+      },
+      project6: {
+        titleAr: "مشروع الرسوميات",
+        titleEn: "Graphics Project",
+        descAr: "مشروع رسوميات مكتبي لتجربة الرسم، الأشكال، ومفاهيم البرمجة المرئية باستخدام C# و Windows Forms.",
+        descEn: "A desktop graphics project experimenting with drawing, shapes, and visual programming concepts using C# and Windows Forms.",
+        stack: "C# · Windows Forms · GDI+ · OOP",
+        featuresAr: ["رسم الأشكال الهندسية", "تطبيق التحويلات الهندسية", "اختيار الألوان والخطوط", "واجهة تفاعلية"],
+        featuresEn: ["Drawing geometric shapes", "Applying geometric transformations", "Color and font selection", "Interactive interface"],
+        image: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=800",
+        live: "#",
+        code: "https://github.com/e7dx"
+      }
+    };
+
+    function openModal(projectId) {
+      const project = projectsData[projectId];
+      if (!project) return;
+
+      document.getElementById('modalImage').src = project.image;
+      
+      // Update text based on language
+      document.getElementById('modalTitle').textContent = isAr ? project.titleAr : project.titleEn;
+      document.getElementById('modalDesc').textContent = isAr ? project.descAr : project.descEn;
+      document.getElementById('modalStack').textContent = project.stack;
+      
+      const featuresList = document.getElementById('modalFeatures');
+      featuresList.innerHTML = '';
+      const features = isAr ? project.featuresAr : project.featuresEn;
+      features.forEach(f => {
+        const li = document.createElement('li');
+        li.textContent = f;
+        featuresList.appendChild(li);
+      });
+
+      // Handle Live and Code links
+      const liveBtn = document.getElementById('modalLive');
+      const codeBtn = document.getElementById('modalCode');
+      
+      if (project.live && project.live !== '#') {
+        liveBtn.href = project.live;
+        liveBtn.style.display = 'inline-flex';
+      } else {
+        liveBtn.style.display = 'none';
+      }
+
+      if (project.code && project.code !== '#') {
+        codeBtn.href = project.code;
+        codeBtn.style.display = 'inline-flex';
+      } else {
+        codeBtn.style.display = 'none';
+      }
+
+      document.getElementById('projectModal').classList.add('active');
+      document.body.style.overflow = 'hidden'; // Prevent scrolling
+    }
+
+    function closeModal() {
+      document.getElementById('projectModal').classList.remove('active');
+      document.body.style.overflow = ''; // Restore scrolling
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('projectModal').addEventListener('click', (e) => {
+      if (e.target.id === 'projectModal') closeModal();
+    });
+
+    // ==== Interactive Shapes (Mouse Follow) ====
+    document.addEventListener('mousemove', (e) => {
+      const shapes = document.querySelectorAll('.shape');
+      const x = (window.innerWidth / 2 - e.pageX) / 30;
+      const y = (window.innerHeight / 2 - e.pageY) / 30;
+      
+      shapes.forEach((shape, index) => {
+        const speed = (index + 1) * 0.5;
+        shape.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+      });
+    });
   </script>
 </body>
 </html>
